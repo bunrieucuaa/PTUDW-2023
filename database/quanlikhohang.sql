@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8887
--- Generation Time: Dec 18, 2023 at 04:27 PM
+-- Generation Time: Dec 19, 2023 at 04:32 PM
 -- Server version: 5.7.24
 -- PHP Version: 8.0.1
 
@@ -29,6 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `admin` (
   `id` int(11) NOT NULL,
+  `tenTaiKhoan` varchar(255) NOT NULL,
   `taiKhoan` varchar(100) NOT NULL,
   `matKhau` varchar(255) NOT NULL,
   `email` varchar(100) NOT NULL,
@@ -39,11 +40,11 @@ CREATE TABLE `admin` (
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`id`, `taiKhoan`, `matKhau`, `email`, `soDienThoai`) VALUES
-(1, 'admin', 'admin', 'admin@gmail.com', '0987767654'),
-(2, 'admin_kho1', 'admin123', 'admin123@gmail.com', '0987654321'),
-(3, 'admin_thanhxuan', '1233321', 'thanh@gmail.com', '0434567654'),
-(4, 'admin_haibatrung', '332211', 'haibatrung@gmail.com', '0987767890');
+INSERT INTO `admin` (`id`, `tenTaiKhoan`, `taiKhoan`, `matKhau`, `email`, `soDienThoai`) VALUES
+(1, 'Hoàng Công Thuận', 'admin', 'admin', 'admin@gmail.com', '0987767654'),
+(2, 'Đinh Văn Hưng', 'admin_khobactuliem', 'admin123', 'admin123@gmail.com', '0987654321'),
+(3, 'Đặng Huy Cảnh', 'admin_thanhxuan', '1233321', 'thanh@gmail.com', '0434567654'),
+(4, 'Nguyễn Văn Hải', 'admin_haibatrung', '332211', 'haibatrung@gmail.com', '0987767890');
 
 -- --------------------------------------------------------
 
