@@ -1,3 +1,41 @@
+<?php
+session_start();
+require('./lichsunhaphang/connection.php');
+$title = "Login";
+$error = [];
+
+if (isset($_POST['submit'])) {
+    function sanitize($conn, $input)
+    {
+        return mysqli_real_escape_string($conn, $input);
+    }
+
+    $taikhoan = sanitize($conn, trim($_POST['TaiKhoan']));
+    $matkhau = sanitize($conn, trim($_POST['MatKhau']));
+
+    $sql = "SELECT * FROM admin WHERE taiKhoan = '$taikhoan' AND matKhau = '$matkhau' LIMIT 1";
+    $result = mysqli_query($conn, $sql);
+
+    if ($result) {
+        if (mysqli_num_rows($result) > 0) {
+            $row = mysqli_fetch_assoc($result);
+            $_SESSION['user'] = $row;
+            header('Location: index.php');
+            exit;
+        } else {
+            $error[] = "Đăng nhập thất bại";
+        }
+    } else {
+        $error[] = "Query failed: " . mysqli_error($conn);
+    }
+}
+
+if (isset($_SESSION['user'])) {
+    header('Location: index.php');
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,9 +51,7 @@
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
@@ -41,38 +77,28 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                                     </div>
-                                    <form class="user">
+                                    <form class="user" method="post" action="">
+                                        <?php if (count($error) > 0) : ?>
+                                            <?php foreach ($error as $errMsg) : ?>
+                                                <div class="alert alert-danger" role="alert">
+                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                    <strong>Error: </strong><?php echo $errMsg; ?>
+                                                </div>
+                                            <?php endforeach; ?>
+                                        <?php endif; ?>
                                         <div class="form-group">
-                                            <input type="email" class="form-control form-control-user"
-                                                id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="Enter Email Address...">
+                                            <input type="text" name="TaiKhoan" class="form-control form-control-user" placeholder="Tên đăng nhập" value="<?php echo isset($_POST['TaiKhoan']) ? htmlspecialchars($_POST['TaiKhoan']) : ''; ?>">
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" class="form-control form-control-user"
-                                                id="exampleInputPassword" placeholder="Password">
+                                            <input type="password" name="MatKhau" class="form-control form-control-user" placeholder="Mật khẩu">
                                         </div>
-                                        <div class="form-group">
-                                            <div class="custom-control custom-checkbox small">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck">
-                                                <label class="custom-control-label" for="customCheck">Remember
-                                                    Me</label>
-                                            </div>
-                                        </div>
-                                        <a href="index.html" class="btn btn-primary btn-user btn-block">
+                                        <button type="submit" name="submit" class="btn btn-primary btn-user btn-block">
                                             Login
-                                        </a>
+                                        </button>
                                         <hr>
-                                        <a href="index.html" class="btn btn-google btn-user btn-block">
-                                            <i class="fab fa-google fa-fw"></i> Login with Google
-                                        </a>
-                                        <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                                            <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
-                                        </a>
+                                        
                                     </form>
                                     <hr>
-                                    <div class="text-center">
-                                        <a class="small" href="forgot-password.html">Forgot Password?</a>
-                                    </div>
                                     <div class="text-center">
                                         <a class="small" href="register.html">Create an Account!</a>
                                     </div>
