@@ -4,6 +4,8 @@
 //     header('location:1-displayAdmin.php');
 //     exit;
 // }
+
+
 if (isset($_GET['deletedid'])) {
     require 'connect.php';
     $id = $_GET['deletedid'];
