@@ -1,7 +1,7 @@
 <?php
 session_start();
-require('./lichsunhaphang/connection.php');
-$title = "Login";
+require('../quanlikhohang/connect.php');
+
 $error = [];
 
 if (isset($_POST['submit'])) {
@@ -35,6 +35,8 @@ if (isset($_SESSION['user'])) {
     exit;
 }
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -98,10 +100,6 @@ if (isset($_SESSION['user'])) {
                                         <hr>
                                         
                                     </form>
-                                    <hr>
-                                    <div class="text-center">
-                                        <a class="small" href="register.html">Create an Account!</a>
-                                    </div>
                                 </div>
                             </div>
                         </div>

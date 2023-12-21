@@ -164,16 +164,16 @@
                                                 </td>
                                                 <?php { ?>
                                                     <td>
-                                                        <a href="updatekhohang.php?updateid=<?php echo $id; ?>"
-                                                            class="btn btn-primary btn-circle">
-                                                            <i class="fas fa-edit"></i>
-                                                        </a>
                                                         <a href="dsdanhmuckhohang.php?khoHangId=<?php echo $id; ?>"
-                                                            class="btn btn-warning btn-circle">
+                                                            style='color: blue'>
                                                             <i class="fas fa-exclamation-circle"></i>
                                                         </a>
+                                                        <a href="updatekhohang.php?updateid=<?php echo $id; ?>"
+                                                            style='color: green'>
+                                                            <i class="fas fa-edit"></i>
+                                                        </a>
                                                         <a href="deletekhohang.php?deletedid=<?php echo $id; ?>"
-                                                            class=" btn btn-danger btn-circle">
+                                                            style='color: red'>
                                                             <i class="fas fa-trash"></i>
                                                         </a>
                                                     </td>

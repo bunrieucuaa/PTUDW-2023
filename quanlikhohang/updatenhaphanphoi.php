@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
 <head>
 
     <meta charset="utf-8">
@@ -41,7 +42,7 @@
 
         <!-- Sidebar -->
         <?php
-        include("sidebar.php");
+        include("../layout/menu.php");
         ?>
         <!-- End of Sidebar -->
 
@@ -53,7 +54,7 @@
 
                 <!-- Topbar -->
                 <?php
-                include("topbar.php");
+                include("../layout/header.php");
                 ?>
 
                 <?php

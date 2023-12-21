@@ -22,40 +22,80 @@
 <body id="page-top">
     <div id="wrapper">
         <?php
-        include("sidebar.php");
+        include("../layout/menu.php");
         ?>
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 <?php
-                include("topbar.php");
+                include("../layout/header.php");
                 ?>
                 <div class="container-fluid">
                     <h1 class="h3 mb-2 text-gray-800">Quản lý tài khoản</h1>
                     <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <div class="container">
-                                <div class="row justify-content-end">
-                                    <div class="col-auto">
-                                        <a href="themtaikhoan.php" class="btn btn-primary btn-icon-split">
-                                            <div class="icon">
-                                                <i class="fas fa-plus"></i>
-                                            </div>
-                                            <span class="text">Thêm tài khoản</span>
-                                        </a>
-                                    </div>
+                        <div class="card-header py-3 d-flex justify-content-end">
+                            <a href="themtaikhoan.php" class="btn btn-success btn-icon-split">
+                                <div class="icon">
+                                    <i class="fas fa-plus"></i>
                                 </div>
-                            </div>
+                                <span class="text">Thêm tài khoản</span>
+                            </a>
                         </div>
                         <div class="card-body">
+                            <?php $status = isset($_GET["status"]) ? $_GET["status"] : ""; ?>
+                            <?php if ($status == 'add_success'): ?>
+                                <div class="alert alert-success" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <strong>Thêm thành công</strong>
+                                </div>
+                            <?php elseif ($status == 'add_fail'): ?>
+                                <div class="alert alert-danger" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <strong>Thêm thất bại</strong>
+                                </div>
+                            <?php elseif ($status == 'del_success'): ?>
+                                <div class="alert alert-success" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <strong>Xóa thành công</strong>
+                                </div>
+                            <?php elseif ($status == 'del_fail'): ?>
+                                <div class="alert alert-danger" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <strong>Xóa thất bại</strong>
+                                </div>
+                            <?php elseif ($status == 'update_success'): ?>
+                                <div class="alert alert-success" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <strong>Sửa thành công</strong>
+                                </div>
+                            <?php elseif ($status == 'update_fail'): ?>
+                                <div class="alert alert-danger" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <strong>Sửa thất bại</strong>
+                                </div>
+                            <?php elseif ($status == 'id_not_found'): ?>
+                                <div class="alert alert-danger" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <strong> Không có bản ghi này ! </strong>
+                                </div>
+                            <?php endif; ?>
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Tài khoản</th>
-                                            <th>Mật khẩu </th>
-                                            <th>Email</th>
-                                            <th>Số điện thoại</th>
-                                            <th>Tác vụ</th>
+                                            <th> STT </th>
+                                            <th> Họ tên </th>
+                                            <th> Tài khoản </th>
+                                            <th> Mật khẩu </th>
+                                            <th> Email </th>
+                                            <th> Số điện thoại </th>
+                                            <th> Tác vụ </th>
                                         </tr>
                                     </thead>
 
@@ -67,30 +107,37 @@
                                         $sql = "SELECT * FROM admin";
                                         $admin = mysqli_query($conn, $sql);
 
+
                                         if (mysqli_num_rows($admin) > 0) {
-                                            $stt = 1;
+                                            $counter = 1;
                                             foreach ($admin as $item) {
+                                                $cnt = $counter;
+                                                $counter++;
                                                 $id = $item['id'];
+                                                $hoTen = $item['tenTaiKhoan'];
                                                 $taiKhoan = $item['taiKhoan'];
                                                 $matKhau = $item['matKhau'];
                                                 $email = $item['email'];
                                                 $soDienThoai = $item['soDienThoai'];
 
                                                 echo "<tr>
+                                                <th>$cnt</th>
+                                                <th>$hoTen</th>
                                                 <th>$taiKhoan</th>
                                                 <th>$matKhau </th>
                                                 <th>$email</th>
                                                 <th>$soDienThoai</th>
                                                 <td style='text-align: center'>
-                                                    <a href='suataikhoan.php?id=$id'><i class='fas fa-edit'></i></a>
-                                                    &nbsp;
-                                                    <a href='xoataikhoan.php?id=$id'><i class='fas fa-trash'></i></a>
-                                                    &nbsp;
+                                                    <a href='xemtaikhoan.php?id=$id' style='color: blue;'>
+                                                    <i class='fas fa-exclamation-circle'></i>
+                                                    </a>
                                                     &nbsp;   
-                                                    <a href='xemtaikhoan.php?id=$id'><i class='fas fa-exclamation-circle'></i></a>
+                                                    <a href='suataikhoan.php?id=$id' style='color: green;'><i class='fas fa-edit'></i></a>
+                                                    &nbsp;
+                                                    <a href='xoataikhoan.php?id=$id' style='color: red;'><i class='fas fa-trash'></i></a>
+                                                    &nbsp; 
                                                 </td>
                                             </tr>";
-                                                $stt++;
                                             }
                                         }
                                         ?>
@@ -114,26 +161,6 @@
         </div>
 
     </div>
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
-                </div>
-            </div>
-        </div>
     </div>
 
     <script src="../vendor/jquery/jquery.min.js"></script>
