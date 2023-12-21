@@ -52,39 +52,44 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <?php
-                    if (isset($_GET['khoHangId'])) {
+                    if (isset($_GET['nhaPhanPhoiId'])) {
                         require 'connect.php';
-                        $khoHangId = $_GET['khoHangId'];
-                        $sql = "SELECT danhmuc_khohang.*, danhmuc.tenDanhMuc, danhmuc.maDanhMuc, khohang.tenKhoHang, khohang.diaChi 
-                            FROM danhmuc_khohang, danhmuc, khohang
-                            WHERE danhmuc_khohang.id = $khoHangId
-                            AND danhmuc.id = danhmuc_khohang.danhMucId
-                            AND khohang.id = danhmuc_khohang.khoHangId
+                        $nhaPhanPhoiId = $_GET['nhaPhanPhoiId'];
+                        $sql = "SELECT sanpham.*, danhmuc.tenDanhMuc, danhmuc.maDanhMuc, donvi.tenDonVi,
+                        nhaphanphoi.tenNhaPhanPhoi
+                            FROM sanpham, danhmuc, donvi, nhaphanphoi
+                            WHERE sanpham.id = $nhaPhanPhoiId
+                            AND danhmuc.id = sanpham.danhMucId
+                            AND donvi.id = sanpham.donViId
+                            AND nhaphanphoi.id = sanpham.nhaPhanPhoiId
                         ";
 
-                        $danhmuc = $conn->query($sql);
+                        $sanpham = mysqli_query($conn, $sql);
+                        $counter = 1;
                     } else {
-                        header('Location: dskhohang.php?status=id_not_found');
+                        header('Location: dsnhaphanphoi.php?status=id_not_found');
                     }
                     ;
 
                     ?>
-
-
                     <!-- Page Heading -->
 
                     <div class="card-header py-3 d-flex justify-content-start">
                         <a href="javascript:history.back()" class="btn btn-warning btn-circle">
                             <i class="fas fa-backward"></i>
                         </a>
-                        <?php while ($row = $danhmuc->fetch_assoc()) {
+                        <?php while ($row = $sanpham->fetch_assoc()) {
+                            $cnt = $counter;
+                            $counter++;
                             $id = $row['id'];
-                            $tenKhoHang = $row['tenKhoHang'];
-                            $tenDanhMuc = $row['tenDanhMuc'];
-                            $maDanhMuc = $row['maDanhMuc'];
+                            $tenSanPham = $row['tenSanPham'];
+                            $soLuong = $row['soLuong'];
+                            $donVi = $row['tenDonVi'];
+                            $nhaPhanPhoi = $row['tenNhaPhanPhoi'];
+                            $danhMuc = $row['tenDanhMuc'];
                             ?>
-                            <h1 class="h3 text-gray-800 pl-3"> Danh Mục Của
-                                <?php echo $tenKhoHang; ?>
+                            <h1 class="h3 text-gray-800 pl-3"> Các sản phẩm của
+                                <?php echo $nhaPhanPhoi; ?>
                             </h1>
                         </div>
 
@@ -96,23 +101,49 @@
                                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
-                                                <th>STT</th>
-                                                <th>Tên danh mục</th>
-                                                <th>Mã danh mục</th>
+                                                <th> STT </th>
+                                                <th> Tên sản phẩm </th>
+                                                <th> Số lượng </th>
+                                                <th> Đơn vị </th>
+                                                <th> Danh mục </th>
+                                                <th> Tác vụ </th>
                                             </tr>
                                         </thead>
                                         <tbody>
 
                                             <tr>
                                                 <td>
-                                                    <?php echo $id; ?>
+                                                    <?php echo $cnt; ?>
                                                 </td>
                                                 <td>
-                                                    <?php echo $tenDanhMuc; ?>
+                                                    <?php echo $tenSanPham; ?>
                                                 </td>
                                                 <td>
-                                                    <?php echo $maDanhMuc; ?>
+                                                    <?php echo $soLuong; ?>
                                                 </td>
+                                                <td>
+                                                    <?php echo $donVi; ?>
+                                                </td>
+                                                <td>
+                                                    <?php echo $danhMuc; ?>
+                                                </td>
+                                                <?php { ?>
+                                                    <td>
+                                                        <a href="updatekhohang.php?updateid=<?php echo $id; ?>"
+                                                            class="btn btn-primary btn-circle">
+                                                            <i class="fas fa-edit"></i>
+                                                        </a>
+                                                        <a href="dsdanhmuckhohang.php?khoHangId=<?php echo $id; ?>"
+                                                            class="btn btn-warning btn-circle">
+                                                            <i class="fas fa-exclamation-circle"></i>
+                                                        </a>
+                                                        <a href="deletekhohang.php?deletedid=<?php echo $id; ?>"
+                                                            class=" btn btn-danger btn-circle">
+                                                            <i class="fas fa-trash"></i>
+                                                        </a>
+                                                    </td>
+                                                <?php }
+                                                ; ?>
                                             <?php } //Dóng while
                         ; ?>
                                         </tr>

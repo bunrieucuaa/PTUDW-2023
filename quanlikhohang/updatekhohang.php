@@ -55,6 +55,48 @@
                 <?php
                 include("topbar.php");
                 ?>
+
+                <?php
+                if (isset($_GET['updateid'])) {
+                    require 'connect.php';
+                    $id = $_GET['updateid'];
+                    $sql = "SELECT * FROM khohang WHERE id=$id";
+                    $result = mysqli_query($conn, $sql);
+                    $row = $result->fetch_assoc();
+
+                    $tenKhoHang = $row['tenKhoHang'];
+                    $diaChi = $row['diaChi'];
+                    $taiKhoanId = $row['taiKhoanId'];
+                    $nhanVienId = $row['nhanVienId'];
+
+                } else {
+                    header('Location: dskhohang.php?status=id_not_found');
+                }
+
+                if (isset($_POST['submit'])) {
+                    $tenKhoHang = $_POST['tenKhoHang'];
+                    $diaChi = $_POST['diaChi'];
+                    $taiKhoanId = $_POST['taiKhoanId'];
+                    $nhanVienId = $_POST['nhanVienId'];
+
+
+                    //echo $lopid; return;
+                    // if ($masv == "" || $tensv == "") {
+                    //     $error[] = "Thông tin đang bỏ trống";
+                    // }
+                    // if (count($error) == 0) {
+                    $sql = "UPDATE khohang SET tenKhoHang='$tenKhoHang', diachi='$diaChi' ,taiKhoanId='$taiKhoanId', nhanVienId='$nhanVienId' WHERE id=$id";
+
+                    // echo $sql;
+                    // return;
+                    if (mysqli_query($conn, $sql)) {
+                        header('Location: dskhohang.php?status=update_success');
+                    } else {
+                        header('Location: dskhohang.php?status=update_fail');
+                    }
+                    // }
+                }
+                ?>
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
@@ -76,32 +118,69 @@
                                     <div class="col-lg-5 d-none d-lg-block bg-image"></div>
                                     <div class="col-lg-7">
                                         <div class="p-5">
-                                            <form class="user">
+                                            <form class="user" action="" method="post">
                                                 <h1 class="h4 text-gray-900 mb-2">Tên kho hàng</h1>
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control form-control-user" id=""
-                                                        placeholder="Tên kho hàng">
+                                                    <input type="text" name="tenKhoHang" class="form-control"
+                                                        value="<?php echo $tenKhoHang ?>" placeholder="Tên kho hàng">
                                                 </div>
-                                                <h1 class="h4 text-gray-900 mb-2">Địa chỉ</h1>
+                                                <h1 class="h4 text-gray-900 mb-2"> Địa chỉ </h1>
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control form-control-user" id=""
+                                                    <input type="text" name="diaChi" class="form-control"
+                                                        value="<?php echo $diaChi ?>" name="diaChi"
                                                         placeholder="Địa chỉ">
                                                 </div>
 
                                                 <h1 class="h4 text-gray-900 mb-2"> Quản lí </h1>
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control form-control-user" id=""
-                                                        placeholder="Quản lí">
+
+                                                    <select name="taiKhoanId" class="form-control">
+                                                        <?php
+                                                        require "connect.php";
+                                                        $select_taikhoan = "SELECT * FROM admin";
+                                                        $result_taikhoan = $conn->query($select_taikhoan);
+
+                                                        while ($row_tk = $result_taikhoan->fetch_assoc()) {
+                                                            $tenTk = $row_tk['tenTaiKhoan'];
+
+                                                            ?>
+                                                            <option value="<?php echo $row_tk['id'] ?>" <?php if ($row_tk['id'] == $taiKhoanId)
+                                                                   echo 'selected'; ?>>
+                                                                <?php echo "$tenTk" ?>
+                                                            </option>
+                                                        <?php }
+                                                        ; ?>
+                                                    </select>
                                                 </div>
+
+
                                                 <h1 class="h4 text-gray-900 mb-2"> Nhân viên kho </h1>
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control form-control-user" id=""
-                                                        placeholder="Nhân viên kho">
+
+
+                                                    <select class="form-control" name="nhanVienId">
+                                                        <?php
+                                                        require "connect.php";
+                                                        $select_nhanvien = "SELECT * FROM nhanvien";
+                                                        $result_nhanvien = mysqli_query($conn, $select_nhanvien);
+
+                                                        while ($row_nv = $result_nhanvien->fetch_assoc()) {
+                                                            $tenNv = $row_nv['tenNhanVien'];
+
+                                                            ?>
+                                                            <option value="<?php echo $row_nv['id'] ?>" <?php if ($row_nv['id'] == $nhanVienId)
+                                                                   echo 'selected'; ?>>
+                                                                <?php echo "$tenNv" ?>
+                                                            </option>
+                                                        <?php }
+                                                        ; ?>
+                                                    </select>
                                                 </div>
                                                 <div class="form-group row">
                                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                                        <input type="submit" class="btn btn-primary btn-user btn-block"
-                                                            id="" placeholder="Tạo kho mới">
+                                                        <input type="submit" name="submit"
+                                                            class="btn btn-primary btn-user btn-block" id=""
+                                                            placeholder="Cập nhật kho">
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <a href="javascript:history.back()"
@@ -111,14 +190,6 @@
                                                     </div>
                                                 </div>
                                             </form>
-
-                                            <?php
-                                            require "connect.php";
-                                            $sql = "SELECT * FROM khohang";
-                                            $khohang = $conn->query($sql);
-
-                                            
-                                            ?>
 
                                         </div>
                                     </div>

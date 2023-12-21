@@ -53,17 +53,23 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800"> Kho Hàng </h1>
+                    <h1 class="h3 mb-2 text-gray-800"> Nhà Phân Phối </h1>
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3 d-flex justify-content-end">
-                            <a href="createkhohang.php" class="btn btn-success btn-icon-split">
+                            <a href="createnhaphanphoi.php" class="btn btn-success btn-icon-split mr-3">
                                 <span class="icon text-white-50">
                                     <i class="fas fa-plus"></i>
                                 </span>
-                                <span class="text"> Thêm kho hàng </span>
+                                <span class="text"> Thêm nhà phân phối </span>
                             </a>
+                            <!-- <a href="" class="btn btn-success btn-icon-split">
+                                <span class="icon text-white-50">
+                                    <i class="fas fa-plus"></i>
+                                </span>
+                                <span class="text"> Thêm sản phẩm </span>
+                            </a> -->
                         </div>
                         <div class="card-body">
                             <?php $status = isset($_GET["status"]) ? $_GET["status"] : ""; ?>
@@ -103,47 +109,37 @@
                                             aria-hidden="true">&times;</span></button>
                                     <strong>Sửa thất bại</strong>
                                 </div>
-                            <?php elseif ($status == 'id_not_found'): ?>
-                                <div class="alert alert-danger" role="alert">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                                            aria-hidden="true">&times;</span></button>
-                                    <strong> Không có bản ghi này ! </strong>
-                                </div>
                             <?php endif; ?>
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
                                             <th>STT</th>
-                                            <th>Tên kho hàng</th>
-                                            <th>Địa chỉ</th>
-                                            <th>Tên Quản Lí</th>
-                                            <th>Nhân viên quản lí kho</th>
-                                            <th>Tác Vụ</th>
+                                            <th>Tên nhà phân phối</th>
+                                            <th> Địa chỉ </th>
+                                            <th> Liên hệ </th>
+                                            <th> Tác Vụ </th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
                                         require "connect.php";
-                                        $sql = "SELECT khohang.id, khohang.tenKhoHang, khohang.diaChi, admin.tenTaiKhoan, nhanvien.tenNhanVien
-                                                    FROM  khohang, admin, nhanvien
-                                                    WHERE admin.id = khohang.taiKhoanId
-                                                    AND nhanvien.id = khohang.nhanVienId
-                                                ";
+                                        $sql = "SELECT * FROM  nhaphanphoi";
 
-                                        $danhmuc_khohang = mysqli_query($conn, $sql);
+                                        $nhaphanphoi = mysqli_query($conn, $sql);
                                         $counter = 1;
                                         ?>
 
-                                        <?php while ($row = $danhmuc_khohang->fetch_assoc()) {
+                                        <?php while ($row = $nhaphanphoi->fetch_assoc()) {
 
                                             $cnt = $counter;
                                             $counter++;
+
+
                                             $id = $row['id'];
-                                            $tenKhoHang = $row['tenKhoHang'];
+                                            $tenNhaPhanPhoi = $row['tenNhaPhanPhoi'];
                                             $diaChi = $row['diaChi'];
-                                            $tenQuanLi = $row['tenTaiKhoan'];
-                                            $nhanVienQLKho = $row['tenNhanVien'];
+                                            $dienThoai = $row['dienThoai'];
                                             ?>
 
                                             <tr>
@@ -151,29 +147,26 @@
                                                     <?php echo $cnt; ?>
                                                 </td>
                                                 <td>
-                                                    <?php echo $tenKhoHang; ?>
+                                                    <?php echo $tenNhaPhanPhoi; ?>
                                                 </td>
                                                 <td>
                                                     <?php echo $diaChi; ?>
                                                 </td>
                                                 <td>
-                                                    <?php echo $tenQuanLi; ?>
-                                                </td>
-                                                <td>
-                                                    <?php echo $nhanVienQLKho; ?>
+                                                    <?php echo $dienThoai; ?>
                                                 </td>
                                                 <?php { ?>
                                                     <td>
-                                                        <a href="updatekhohang.php?updateid=<?php echo $id; ?>"
+                                                        <a href='updatenhaphanphoi.php?updateid=<?php echo $id; ?>'
                                                             class="btn btn-primary btn-circle">
                                                             <i class="fas fa-edit"></i>
                                                         </a>
-                                                        <a href="dsdanhmuckhohang.php?khoHangId=<?php echo $id; ?>"
+                                                        <a href='dssanpham.php?nhaPhanPhoiId=<?php echo $id; ?>'
                                                             class="btn btn-warning btn-circle">
                                                             <i class="fas fa-exclamation-circle"></i>
                                                         </a>
-                                                        <a href="deletekhohang.php?deletedid=<?php echo $id; ?>"
-                                                            class=" btn btn-danger btn-circle">
+                                                        <a href="deletenhaphanphoi.php?deletedid=<?php echo $id; ?>"
+                                                            class="btn btn-danger btn-circle">
                                                             <i class="fas fa-trash"></i>
                                                         </a>
                                                     </td>
