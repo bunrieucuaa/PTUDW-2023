@@ -45,7 +45,7 @@
 
                 <!-- Topbar -->
                 <?php
-                include("topbar.php");
+                include("header.php");
                 ?>
                 <!-- End of Topbar -->
 

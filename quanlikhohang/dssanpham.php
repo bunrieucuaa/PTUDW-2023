@@ -34,7 +34,7 @@
 
         <!-- Sidebar -->
         <?php
-        include("../layout/menu.php");
+        include("sidebar.php");
         ?>
         <!-- End of Sidebar -->
 
@@ -46,72 +46,116 @@
 
                 <!-- Topbar -->
                 <?php
-                include("../layout/header.php");
+                include("header.php");
                 ?>
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <?php
-                    if (isset($_GET['nhaPhanPhoiId'])) {
-                        require 'connect.php';
-                        $nhaPhanPhoiId = $_GET['nhaPhanPhoiId'];
-                        $sql = "SELECT sanpham.*, danhmuc.tenDanhMuc, danhmuc.maDanhMuc, donvi.tenDonVi,
+                    require 'connect.php';
+                    $sql = "SELECT sanpham.*, danhmuc.tenDanhMuc, danhmuc.maDanhMuc, donvi.tenDonVi,
                         nhaphanphoi.tenNhaPhanPhoi
                             FROM sanpham, danhmuc, donvi, nhaphanphoi
-                            WHERE sanpham.id = $nhaPhanPhoiId
-                            AND danhmuc.id = sanpham.danhMucId
+                            WHERE danhmuc.id = sanpham.danhMucId
                             AND donvi.id = sanpham.donViId
                             AND nhaphanphoi.id = sanpham.nhaPhanPhoiId
+                    
                         ";
 
-                        $sanpham = mysqli_query($conn, $sql);
-                        $counter = 1;
-                    } else {
-                        header('Location: dsnhaphanphoi.php?status=id_not_found');
-                    }
+                    $sanpham = mysqli_query($conn, $sql);
+
+                    $counter = 1;
+
                     ;
 
                     ?>
                     <!-- Page Heading -->
 
                     <div class="card-header py-3 d-flex justify-content-start">
-                        <a href="javascript:history.back()" class="btn btn-warning btn-circle">
-                            <i class="fas fa-backward"></i>
-                        </a>
-                        <?php while ($row = $sanpham->fetch_assoc()) {
-                            $cnt = $counter;
-                            $counter++;
-                            $id = $row['id'];
-                            $tenSanPham = $row['tenSanPham'];
-                            $soLuong = $row['soLuong'];
-                            $donVi = $row['tenDonVi'];
-                            $nhaPhanPhoi = $row['tenNhaPhanPhoi'];
-                            $danhMuc = $row['tenDanhMuc'];
-                            ?>
-                            <h1 class="h3 text-gray-800 pl-3"> Các sản phẩm của
-                                <?php echo $nhaPhanPhoi; ?>
-                            </h1>
+
+                        <h1 class="h3 text-gray-800 pl-3"> Sản phẩm </h1>
+                    </div>
+
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3 d-flex justify-content-end">
+                            <a href="createsanpham.php" class="btn btn-success btn-icon-split">
+                                <span class="icon text-white-50">
+                                    <i class="fas fa-plus"></i>
+                                </span>
+                                <span class="text"> Thêm sản phẩm </span>
+                            </a>
                         </div>
-
-                        <!-- DataTales Example -->
-                        <div class="card shadow mb-4">
-
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                        <thead>
-                                            <tr>
-                                                <th> STT </th>
-                                                <th> Tên sản phẩm </th>
-                                                <th> Số lượng </th>
-                                                <th> Đơn vị </th>
-                                                <th> Danh mục </th>
-                                                <th> Tác vụ </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-
+                        <div class="card-body">
+                            <?php $status = isset($_GET["status"]) ? $_GET["status"] : ""; ?>
+                            <?php if ($status == 'add_success'): ?>
+                                <div class="alert alert-success" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <strong>Thêm thành công</strong>
+                                </div>
+                            <?php elseif ($status == 'add_fail'): ?>
+                                <div class="alert alert-danger" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <strong>Thêm thất bại</strong>
+                                </div>
+                            <?php elseif ($status == 'del_success'): ?>
+                                <div class="alert alert-success" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <strong>Xóa thành công</strong>
+                                </div>
+                            <?php elseif ($status == 'del_fail'): ?>
+                                <div class="alert alert-danger" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <strong>Xóa thất bại</strong>
+                                </div>
+                            <?php elseif ($status == 'update_success'): ?>
+                                <div class="alert alert-success" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <strong>Sửa thành công</strong>
+                                </div>
+                            <?php elseif ($status == 'update_fail'): ?>
+                                <div class="alert alert-danger" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <strong>Sửa thất bại</strong>
+                                </div>
+                            <?php elseif ($status == 'id_not_found'): ?>
+                                <div class="alert alert-danger" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <strong> Không có bản ghi này ! </strong>
+                                </div>
+                            <?php endif; ?>
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th> STT </th>
+                                            <th> Tên sản phẩm </th>
+                                            <th> Số lượng </th>
+                                            <th> Đơn vị </th>
+                                            <th> Danh mục </th>
+                                            <th> Nhà Phân Phối </th>
+                                            <th> Tác vụ </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php while ($row = $sanpham->fetch_assoc()) {
+                                            $cnt = $counter;
+                                            $counter++;
+                                            $id = $row['id'];
+                                            $tenSanPham = $row['tenSanPham'];
+                                            $soLuong = $row['soLuong'];
+                                            $donVi = $row['tenDonVi'];
+                                            $danhMuc = $row['tenDanhMuc'];
+                                            $nhaPhanPhoi = $row['tenNhaPhanPhoi'];
+                                            ?>
                                             <tr>
                                                 <td>
                                                     <?php echo $cnt; ?>
@@ -128,25 +172,24 @@
                                                 <td>
                                                     <?php echo $danhMuc; ?>
                                                 </td>
+                                                <td>
+                                                    <?php echo $nhaPhanPhoi; ?>
+                                                </td>
                                                 <?php { ?>
                                                     <td>
-                                                        <a href="updatekhohang.php?updateid=<?php echo $id; ?>"
-                                                            class="btn btn-primary btn-circle">
+                                                        <a href="updatesanpham.php?updateid=<?php echo $id; ?>"
+                                                            style='color: blue'>
                                                             <i class="fas fa-edit"></i>
                                                         </a>
-                                                        <a href="dsdanhmuckhohang.php?khoHangId=<?php echo $id; ?>"
-                                                            class="btn btn-warning btn-circle">
-                                                            <i class="fas fa-exclamation-circle"></i>
-                                                        </a>
-                                                        <a href="deletekhohang.php?deletedid=<?php echo $id; ?>"
-                                                            class=" btn btn-danger btn-circle">
+                                                        <a href="deletesanpham.php?deletedid=<?php echo $id; ?>"
+                                                            style='color: red'>
                                                             <i class="fas fa-trash"></i>
                                                         </a>
                                                     </td>
                                                 <?php }
                                                 ; ?>
                                             <?php } //Dóng while
-                        ; ?>
+                                        ; ?>
                                         </tr>
                                     </tbody>
                                 </table>

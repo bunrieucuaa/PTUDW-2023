@@ -41,7 +41,7 @@
 
         <!-- Sidebar -->
         <?php
-        include("../layout/menu.php");
+        include("sidebar.php");
         ?>
         <!-- End of Sidebar -->
 
@@ -53,13 +53,13 @@
 
                 <!-- Topbar -->
                 <?php
-                include("../layout/header.php");
+                include("header.php");
                 ?>
 
                 <?php
                 require "connect.php";
                 $sqlTk = "SELECT * FROM admin";
-                $sqlNv = "SELECT * FROM nhanvien";
+                $sqlNv = "SELECT * FROM nhanvien";  
 
                 $taikhoan = $conn->query($sqlTk);
                 $nhanvien = $conn->query($sqlNv);
@@ -70,18 +70,13 @@
                     $taiKhoanId = $_POST['taiKhoanId'];
                     $nhanVienId = $_POST['nhanVienId'];
 
-
-                    //echo $lopid; return;
-                    // if ($masv == "" || $tensv == "") {
-                    //     $error[] = "Thông tin đang bỏ trống";
-                    // }
-                    // if (count($error) == 0) {
                     $sql = "INSERT INTO khohang (tenKhoHang, diaChi, taiKhoanId, nhanVienId) VALUES ('$tenKhoHang', '$diaChi', '$nhanVienId', '$taiKhoanId')";
 
 
                     // echo $sql; return;
                     if (mysqli_query($conn, $sql)) {
                         header('Location: dskhohang.php?status=add_success');
+
                     } else {
                         header('Location: dskhohang.php?status=add_fail');
                     }
