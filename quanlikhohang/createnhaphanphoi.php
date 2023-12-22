@@ -42,7 +42,7 @@
 
         <!-- Sidebar -->
         <?php
-        include("../layout/menu.php");
+        include("sidebar.php");
         ?>
         <!-- End of Sidebar -->
 
@@ -54,7 +54,7 @@
 
                 <!-- Topbar -->
                 <?php
-                include("../layout/header.php");
+                include("header.php");
                 ?>
 
                 <?php
@@ -105,21 +105,21 @@
                                     <div class="col-lg-5 d-none d-lg-block bg-image"></div>
                                     <div class="col-lg-7">
                                         <div class="p-5">
-                                            <form class="user" action="" method="post">
+                                            <form class="user" action="" method="post" id="form">
                                                 <h1 class="h4 text-gray-900 mb-2">Tên nhà phân phối</h1>
                                                 <div class="form-group">
-                                                    <input type="text" name="tenNhaPhanPhoi" class="form-control" id=""
-                                                        placeholder="Tên nhà phân phối">
+                                                    <input type="text" name="tenNhaPhanPhoi" class="form-control"
+                                                        id="tenNhaPhanPhoi" placeholder="Tên nhà phân phối">
                                                 </div>
                                                 <h1 class="h4 text-gray-900 mb-2">Địa chỉ</h1>
                                                 <div class="form-group">
-                                                    <input type="text" name="diaChi" class="form-control" id=""
+                                                    <input type="text" name="diaChi" class="form-control" id="diaChi"
                                                         name="diaChi" placeholder="Địa chỉ">
                                                 </div>
                                                 <h1 class="h4 text-gray-900 mb-2">Số điện thoại</h1>
                                                 <div class="form-group">
-                                                    <input type="text" name="dienThoai" class="form-control" id=""
-                                                        name="dienThoai" placeholder="Số điện thoại">
+                                                    <input type="text" name="dienThoai" class="form-control"
+                                                        id="dienThoai" name="dienThoai" placeholder="Số điện thoại">
                                                 </div>
                                                 <div class="form-group row">
                                                     <div class="col-sm-6 mb-3 mb-sm-0">
@@ -185,3 +185,22 @@
 </body>
 
 </html>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelector('#form').onsubmit = function () {
+            let tenNhaPhanPhoi = document.querySelector('#tenNhaPhanPhoi').value;
+            let diaChi = document.querySelector('#diaChi').value;
+            let dienThoai = document.querySelector('#dienThoai').value;
+
+            if (tenNhaPhanPhoi == "" || diaChi == "" || dienThoai == "") {
+                alert('Bạn chưa nhập đủ dữ liệu yêu cầu!');
+                return false;
+            }
+            if (dienThoai.length < 10) {
+                alert('Số điện thoại phải tối thiểu 10 số !');
+                return false;
+            }
+        }
+    })
+</script>

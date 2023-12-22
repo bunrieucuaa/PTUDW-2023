@@ -35,7 +35,7 @@
 
         <!-- Sidebar -->
         <?php
-        include("../layout/menu.php");
+        include("sidebar.php");
         ?>
         <!-- End of Sidebar -->
 
@@ -47,7 +47,7 @@
 
                 <!-- Topbar -->
                 <?php
-                include("../layout/header.php");
+                include("header.php");
                 ?>
                 <!-- End of Topbar -->
 
@@ -60,18 +60,12 @@
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3 d-flex justify-content-end">
-                            <a href="createnhaphanphoi.php" class="btn btn-success btn-icon-split mr-3">
+                            <a href="createnhaphanphoi.php" class="btn btn-success btn-icon-split">
                                 <span class="icon text-white-50">
                                     <i class="fas fa-plus"></i>
                                 </span>
-                                <span class="text"> Thêm nhà phân phối </span>
+                                <span class="text"> Thêm nhà phân phôi </span>
                             </a>
-                            <!-- <a href="" class="btn btn-success btn-icon-split">
-                                <span class="icon text-white-50">
-                                    <i class="fas fa-plus"></i>
-                                </span>
-                                <span class="text"> Thêm sản phẩm </span>
-                            </a> -->
                         </div>
                         <div class="card-body">
                             <?php $status = isset($_GET["status"]) ? $_GET["status"] : ""; ?>
@@ -130,6 +124,11 @@
 
                                         $nhaphanphoi = mysqli_query($conn, $sql);
                                         $counter = 1;
+
+                                        if ($nhaphanphoi->num_rows == 0) {
+                                            echo "Chưa có nhà phân phối này.<a href='javascript: history.go(-1)'>Trở lại</a>";
+                                            exit;
+                                        }
                                         ?>
 
                                         <?php while ($row = $nhaphanphoi->fetch_assoc()) {
@@ -159,16 +158,16 @@
                                                 </td>
                                                 <?php { ?>
                                                     <td>
-                                                        <a href='updatenhaphanphoi.php?updateid=<?php echo $id; ?>'
-                                                            class="btn btn-primary btn-circle">
-                                                            <i class="fas fa-edit"></i>
-                                                        </a>
-                                                        <a href='dssanpham.php?nhaPhanPhoiId=<?php echo $id; ?>'
-                                                            class="btn btn-warning btn-circle">
+                                                        <a href='dssanphambynhaphanphoi.php?nhaPhanPhoiId=<?php echo $id; ?>'
+                                                            style='color: blue'>
                                                             <i class="fas fa-exclamation-circle"></i>
                                                         </a>
+                                                        <a href='updatenhaphanphoi.php?updateid=<?php echo $id; ?>'
+                                                            style='color: green'>
+                                                            <i class="fas fa-edit"></i>
+                                                        </a>
                                                         <a href="deletenhaphanphoi.php?deletedid=<?php echo $id; ?>"
-                                                            class="btn btn-danger btn-circle">
+                                                            style='color: red'>
                                                             <i class="fas fa-trash"></i>
                                                         </a>
                                                     </td>

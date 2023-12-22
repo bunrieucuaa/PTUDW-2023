@@ -45,7 +45,7 @@
 
                 <!-- Topbar -->
                 <?php
-                include("topbar.php");
+                include("header.php");
                 ?>
                 <!-- End of Topbar -->
 
@@ -133,6 +133,11 @@
 
                                         $danhmuc_khohang = mysqli_query($conn, $sql);
                                         $counter = 1;
+
+                                        if ($danhmuc_khohang->num_rows == 0) {
+                                            echo "Chưa có kho hàng này.<a href='javascript: history.go(-1)'>Trở lại</a>";
+                                            exit;
+                                        }
                                         ?>
 
                                         <?php while ($row = $danhmuc_khohang->fetch_assoc()) {

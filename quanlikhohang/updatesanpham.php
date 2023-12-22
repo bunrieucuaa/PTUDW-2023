@@ -26,7 +26,7 @@
 
     <style>
         .bg-image {
-            background: url(../isset/luu-kho-hang-hoa.jpg);
+            background: url(../isset/Product_Marketing-1030x586.jpg);
             background-position: center;
             background-size: cover;
         }
@@ -61,41 +61,34 @@
                 if (isset($_GET['updateid'])) {
                     require 'connect.php';
                     $id = $_GET['updateid'];
-                    $sql = "SELECT * FROM khohang WHERE id=$id";
+                    $sql = "SELECT * FROM sanpham WHERE id=$id";
                     $result = mysqli_query($conn, $sql);
                     $row = $result->fetch_assoc();
 
-                    $tenKhoHang = $row['tenKhoHang'];
-                    $diaChi = $row['diaChi'];
-                    $taiKhoanId = $row['taiKhoanId'];
-                    $nhanVienId = $row['nhanVienId'];
+                    $tenSanPham = $row['tenSanPham'];
+                    $soLuong = $row['soLuong'];
+                    $donViId = $row['donViId'];
+                    $danhMucId = $row['danhMucId'];
+                    $nhaPhanPhoiId = $row['nhaPhanPhoiId'];
 
                 } else {
-                    header('Location: dskhohang.php?status=id_not_found');
+                    header('Location: dssanpham.php?status=id_not_found');
                 }
 
                 if (isset($_POST['submit'])) {
-                    $tenKhoHang = $_POST['tenKhoHang'];
-                    $diaChi = $_POST['diaChi'];
-                    $taiKhoanId = $_POST['taiKhoanId'];
-                    $nhanVienId = $_POST['nhanVienId'];
+                    $tenSanPham = $_POST['tenSanPham'];
+                    $soLuong = $_POST['soLuong'];
+                    $donViId = $_POST['donViId'];
+                    $danhMucId = $_POST['danhMucId'];
+                    $nhaPhanPhoiId = $_POST['nhaPhanPhoiId'];
 
+                    $sql = "UPDATE sanpham SET tenSanPham='$tenSanPham', soLuong='$soLuong' ,donViId='$donViId', danhMucId='$danhMucId', nhaPhanPhoiId='$nhaPhanPhoiId' WHERE id=$id";
 
-                    //echo $lopid; return;
-                    // if ($masv == "" || $tensv == "") {
-                    //     $error[] = "Thông tin đang bỏ trống";
-                    // }
-                    // if (count($error) == 0) {
-                    $sql = "UPDATE khohang SET tenKhoHang='$tenKhoHang', diachi='$diaChi' ,taiKhoanId='$taiKhoanId', nhanVienId='$nhanVienId' WHERE id=$id";
-
-                    // echo $sql;
-                    // return;
                     if (mysqli_query($conn, $sql)) {
-                        header('Location: dskhohang.php?status=update_success');
+                        header('Location: dssanpham.php?status=update_success');
                     } else {
-                        header('Location: dskhohang.php?status=update_fail');
+                        header('Location: dssanpham.php?status=update_fail');
                     }
-                    // }
                 }
                 ?>
                 <!-- End of Topbar -->
@@ -108,7 +101,7 @@
                         <a href="javascript:history.back()" class="btn btn-warning btn-circle">
                             <i class="fas fa-backward"></i>
                         </a>
-                        <h1 class="h3 mb-2 text-gray-800"> Cập nhật Kho Hàng </h1>
+                        <h1 class="h3 mb-2 text-gray-800"> Cập nhật sản phẩm </h1>
                     </div>
 
                     <!-- DataTales Example -->
@@ -120,34 +113,33 @@
                                     <div class="col-lg-7">
                                         <div class="p-5">
                                             <form class="user" action="" method="post">
-                                                <h1 class="h4 text-gray-900 mb-2">Tên kho hàng</h1>
+                                                <h1 class="h4 text-gray-900 mb-2">Tên sản phẩm </h1>
                                                 <div class="form-group">
-                                                    <input type="text" name="tenKhoHang" class="form-control"
-                                                        value="<?php echo $tenKhoHang ?>" placeholder="Tên kho hàng">
+                                                    <input type="text" name="tenSanPham" class="form-control"
+                                                        value="<?php echo $tenSanPham ?>" placeholder="Tên sản phẩm">
                                                 </div>
-                                                <h1 class="h4 text-gray-900 mb-2"> Địa chỉ </h1>
+                                                <h1 class="h4 text-gray-900 mb-2"> Số lượng </h1>
                                                 <div class="form-group">
-                                                    <input type="text" name="diaChi" class="form-control"
-                                                        value="<?php echo $diaChi ?>" name="diaChi"
-                                                        placeholder="Địa chỉ">
+                                                    <input type="text" name="soLuong" class="form-control"
+                                                        value="<?php echo $soLuong ?>" placeholder="Số lượng">
                                                 </div>
 
-                                                <h1 class="h4 text-gray-900 mb-2"> Quản lí </h1>
+                                                <h1 class="h4 text-gray-900 mb-2"> Danh Mục </h1>
                                                 <div class="form-group">
 
-                                                    <select name="taiKhoanId" class="form-control">
+                                                    <select name="danhMucId" class="form-control">
                                                         <?php
                                                         require "connect.php";
-                                                        $select_taikhoan = "SELECT * FROM admin";
-                                                        $result_taikhoan = $conn->query($select_taikhoan);
+                                                        $select_danhmuc = "SELECT * FROM danhmuc";
+                                                        $result_danhmuc = $conn->query($select_danhmuc);
 
-                                                        while ($row_tk = $result_taikhoan->fetch_assoc()) {
-                                                            $tenTk = $row_tk['tenTaiKhoan'];
+                                                        while ($row_danhmuc = $result_danhmuc->fetch_assoc()) {
+                                                            $tenDanhMuc = $row_danhmuc['tenDanhMuc'];
 
                                                             ?>
-                                                            <option value="<?php echo $row_tk['id'] ?>" <?php if ($row_tk['id'] == $taiKhoanId)
+                                                            <option value="<?php echo $row_danhmuc['id'] ?>" <?php if ($row_danhmuc['id'] == $danhMucId)
                                                                    echo 'selected'; ?>>
-                                                                <?php echo "$tenTk" ?>
+                                                                <?php echo "$tenDanhMuc" ?>
                                                             </option>
                                                         <?php }
                                                         ; ?>
@@ -155,23 +147,46 @@
                                                 </div>
 
 
-                                                <h1 class="h4 text-gray-900 mb-2"> Nhân viên kho </h1>
+                                                <h1 class="h4 text-gray-900 mb-2"> Đơn vị </h1>
+                                                <div class="form-group">
+
+                                                    <select name="donViId" class="form-control">
+                                                        <?php
+                                                        require "connect.php";
+                                                        $select_donvi = "SELECT * FROM donvi";
+                                                        $result_donvi = $conn->query($select_donvi);
+
+                                                        while ($row_dv = $result_donvi->fetch_assoc()) {
+                                                            $tenDv = $row_dv['tenDonVi'];
+
+                                                            ?>
+                                                            <option value="<?php echo $row_dv['id'] ?>" <?php if ($row_dv['id'] == $taiKhoanId)
+                                                                   echo 'selected'; ?>>
+                                                                <?php echo "$tenDv" ?>
+                                                            </option>
+                                                        <?php }
+                                                        ; ?>
+                                                    </select>
+                                                </div>
+
+
+                                                <h1 class="h4 text-gray-900 mb-2"> Nhà phân phối </h1>
                                                 <div class="form-group">
 
 
-                                                    <select class="form-control" name="nhanVienId">
+                                                    <select class="form-control" name="nhaPhanPhoiId">
                                                         <?php
                                                         require "connect.php";
-                                                        $select_nhanvien = "SELECT * FROM nhanvien";
-                                                        $result_nhanvien = mysqli_query($conn, $select_nhanvien);
+                                                        $select_nhapp = "SELECT * FROM nhaphanphoi";
+                                                        $result_nhapp = mysqli_query($conn, $select_nhapp);
 
-                                                        while ($row_nv = $result_nhanvien->fetch_assoc()) {
-                                                            $tenNv = $row_nv['tenNhanVien'];
+                                                        while ($row_NPP = $result_nhapp->fetch_assoc()) {
+                                                            $tenNPP = $row_NPP['tenNhaPhanPhoi'];
 
                                                             ?>
-                                                            <option value="<?php echo $row_nv['id'] ?>" <?php if ($row_nv['id'] == $nhanVienId)
+                                                            <option value="<?php echo $row_NPP['id'] ?>" <?php if ($row_NPP['id'] == $nhaPhanPhoiId)
                                                                    echo 'selected'; ?>>
-                                                                <?php echo "$tenNv" ?>
+                                                                <?php echo "$tenNPP" ?>
                                                             </option>
                                                         <?php }
                                                         ; ?>
@@ -181,7 +196,7 @@
                                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                                         <input type="submit" name="submit"
                                                             class="btn btn-primary btn-user btn-block" id=""
-                                                            placeholder="Cập nhật kho">
+                                                            placeholder="Cập nhật sản phẩm">
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <a href="javascript:history.back()"
@@ -245,9 +260,10 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         document.querySelector('#form').onsubmit = function () {
-            let tenKhoHang = document.querySelector('#tenKhoHang').value;
-            let diaChi = document.querySelector('#diaChi').value;
-            if (tenKhoHang == "" || diaChi == "") {
+            let tenSanPham = document.querySelector('#tenSanPham').value;
+            let soLuong = document.querySelector('#soLuong').value;
+
+            if (tenSanPham == "" || soLuong == "") {
                 alert('Bạn chưa nhập đủ dữ liệu yêu cầu!');
                 return false;
             }

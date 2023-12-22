@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8887
--- Generation Time: Dec 21, 2023 at 11:53 AM
+-- Generation Time: Dec 22, 2023 at 10:57 AM
 -- Server version: 5.7.24
 -- PHP Version: 8.0.1
 
@@ -33,48 +33,24 @@ CREATE TABLE `admin` (
   `taiKhoan` varchar(100) NOT NULL,
   `matKhau` varchar(255) NOT NULL,
   `email` varchar(100) NOT NULL,
-  `soDienThoai` varchar(20) NOT NULL,
-  `role_id` int(11) NOT NULL
+  `soDienThoai` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`id`, `tenTaiKhoan`, `taiKhoan`, `matKhau`, `email`, `soDienThoai`, `role_id`) VALUES
-(1, 'Hoàng Công Thuận', 'admin', 'admin', 'admin@gmail.com', '0987767654', 1),
-(2, 'Đinh Văn Hưng', 'admin_khobactuliem', 'admin123', 'admin123@gmail.com', '0987654321', 1),
-(3, 'Đặng Huy Cảnh', 'admin_thanhxuan', '1233321', 'thanh@gmail.com', '0434567654', 1),
-(4, 'Nguyễn Văn Hải', 'admin_haibatrung', '332211', 'haibatrung@gmail.com', '0987767890', 1),
-(5, 'Phan Anh Đức', 'duccut123', '123321', 'duc@gmail.com', '0987646386', 2),
-(6, 'Nguyễn Tuấn Việt', 'viet123', 'viet123ert', 'viet34@gmail.com', '0434556789', 2),
-(7, 'Trần Phương Thảo', 'pthao23', '1233456', 'pthao@gmail.com', '0989987767', 2),
-(8, 'Hoàng Phương Quỳnh', 'quynh123', '123qweryu', 'quynh12@gmail.com', '0994435654', 2),
-(9, 'Đoàn Thùy Linh', 'linh23', '123linh123', 'linh233@gmail.com', '0985546657', 2),
-(10, 'Phạm Hương Thùy', 'thuyk12', 'thuyk1233221', 'thuy@gmail.com', '0234435678', 2);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `chucvu`
---
-
-CREATE TABLE `chucvu` (
-  `id` int(11) NOT NULL,
-  `tenChucVu` varchar(255) NOT NULL,
-  `nhanVienId` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `chucvu`
---
-
-INSERT INTO `chucvu` (`id`, `tenChucVu`, `nhanVienId`) VALUES
-(1, 'Thủ kho', 1),
-(2, 'Nhân viên kho', 2),
-(3, 'Kế toán kho', 4),
-(4, 'Quản lí kho', 3),
-(5, 'Giám sát kho', 5);
+INSERT INTO `admin` (`id`, `tenTaiKhoan`, `taiKhoan`, `matKhau`, `email`, `soDienThoai`) VALUES
+(1, 'Hoàng Công Thuận', 'admin', 'admin', 'admin@gmail.com', '0987767654'),
+(2, 'Đinh Văn Hưng', 'admin_khobactuliem', 'admin123', 'admin123@gmail.com', '0987654321'),
+(3, 'Đặng Huy Cảnh', 'admin_thanhxuan', '1233321', 'thanh@gmail.com', '0434567654'),
+(4, 'Nguyễn Văn Hải', 'admin_haibatrung', '332211', 'haibatrung@gmail.com', '0987767890'),
+(5, 'Phan Anh Đức', 'duccut123', '123321', 'duc@gmail.com', '0987646386'),
+(6, 'Nguyễn Tuấn Việt', 'viet123', 'viet123ert', 'viet34@gmail.com', '0434556789'),
+(7, 'Trần Phương Thảo', 'pthao23', '1233456', 'pthao@gmail.com', '0989987767'),
+(8, 'Hoàng Phương Quỳnh', 'quynh123', '123qweryu', 'quynh12@gmail.com', '0994435654'),
+(9, 'Đoàn Thùy Linh', 'linh23', '123linh123', 'linh233@gmail.com', '0985546657'),
+(10, 'Phạm Hương Thùy', 'thuyk12', 'thuyk1233221', 'thuy@gmail.com', '0234435678');
 
 -- --------------------------------------------------------
 
@@ -96,7 +72,9 @@ INSERT INTO `danhmuc` (`id`, `tenDanhMuc`, `maDanhMuc`) VALUES
 (1, 'Đồ tiêu dùng', 'doTieuDung'),
 (2, 'Đồ thực phẩm', 'doThuPham'),
 (3, 'Đồ điện tử', 'doDienTu'),
-(4, 'Đồ gia dụng', 'doGiaDung');
+(4, 'Đồ gia dụng', 'doGiaDung'),
+(5, 'Đồ gia đình', 'doGiaDinh'),
+(6, 'Đồ nhà bếp', 'doNhaBep');
 
 -- --------------------------------------------------------
 
@@ -172,7 +150,8 @@ INSERT INTO `khohang` (`id`, `tenKhoHang`, `diaChi`, `taiKhoanId`, `nhanVienId`)
 (6, 'Kho Hàng Hà Đông', 'Mộ Lao, Hà Đông', 4, 4),
 (7, 'Kho Hàng Quảng Ninh', 'Hạ Long, Quảng Ninh', 7, 6),
 (9, 'Kho Hàng Lào Cai', 'Sapa, Lào Cai', 7, 8),
-(10, 'Kho Hàng Vũng Tàu', 'Somewhere in Vũng Tàu', 8, 8);
+(10, 'Kho Hàng Vũng Tàu', 'Somewhere in Vũng Tàu', 8, 8),
+(11, 'Kho Hàng Mê Linh', 'Mê Linh, Hà Nội', 9, 1);
 
 -- --------------------------------------------------------
 
@@ -235,23 +214,24 @@ CREATE TABLE `nhanvien` (
   `tenNhanVien` varchar(100) NOT NULL,
   `soDienThoai` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `diaChi` varchar(255) NOT NULL
+  `diaChi` varchar(255) NOT NULL,
+  `chucVu` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `nhanvien`
 --
 
-INSERT INTO `nhanvien` (`id`, `tenNhanVien`, `soDienThoai`, `email`, `diaChi`) VALUES
-(1, 'Nguyễn Quang Thành', '0987678987', 'thanh@gmail.com', 'Liên Mạc, Bắc Từ Liêm, Hà Nội'),
-(2, 'Nguyễn Việt An', '0987273748', 'ann@gmail.com', 'Cổ Nhuế, Park Từ Liêm, Hà Nội'),
-(3, 'Phạm Tiến Dũng', '0987776676', 'dung@gmail.com', 'Dối diện mỏ địa chất'),
-(4, 'Nguyễn Xuân Khánh', '0889876654', 'khanhDen@gmail.com', 'Hòa Lạc, Ba Vì, Hà Nội'),
-(5, 'Hoàng Văn Toàn', '0876567876', 'taotentoan@gmail.com', 'Xuân Thủy, Cầu Giấy, Hà Nội'),
-(6, 'Nguyễn Việt Dũng', '0545678976', 'dung@gmail.com', 'Cổ Nhuế, Hà Nội'),
-(7, 'Bùi Văn Duy', '0944556332', 'duy@gmail.com', 'Từ Sơn, Bắc Ninh'),
-(8, 'Nguyễn Việt Hoàng', '0876654456', 'hoang@gmail.com', 'Bắc Sơn, Bắc Giang'),
-(9, 'Nguyễn Việt Tiến', '0876654455', 'tien@gmail.com', 'Sapa, Lào Cai');
+INSERT INTO `nhanvien` (`id`, `tenNhanVien`, `soDienThoai`, `email`, `diaChi`, `chucVu`) VALUES
+(1, 'Nguyễn Quang Thành', '0987678987', 'thanh@gmail.com', 'Liên Mạc, Bắc Từ Liêm, Hà Nội', ''),
+(2, 'Nguyễn Việt An', '0987273748', 'ann@gmail.com', 'Cổ Nhuế, Park Từ Liêm, Hà Nội', ''),
+(3, 'Phạm Tiến Dũng', '0987776676', 'dung@gmail.com', 'Dối diện mỏ địa chất', ''),
+(4, 'Nguyễn Xuân Khánh', '0889876654', 'khanhDen@gmail.com', 'Hòa Lạc, Ba Vì, Hà Nội', ''),
+(5, 'Hoàng Văn Toàn', '0876567876', 'taotentoan@gmail.com', 'Xuân Thủy, Cầu Giấy, Hà Nội', ''),
+(6, 'Nguyễn Việt Dũng', '0545678976', 'dung@gmail.com', 'Cổ Nhuế, Hà Nội', ''),
+(7, 'Bùi Văn Duy', '0944556332', 'duy@gmail.com', 'Từ Sơn, Bắc Ninh', ''),
+(8, 'Nguyễn Việt Hoàng', '0876654456', 'hoang@gmail.com', 'Bắc Sơn, Bắc Giang', ''),
+(9, 'Nguyễn Việt Tiến', '0876654455', 'tien@gmail.com', 'Sapa, Lào Cai', '');
 
 -- --------------------------------------------------------
 
@@ -271,33 +251,10 @@ CREATE TABLE `nhaphanphoi` (
 --
 
 INSERT INTO `nhaphanphoi` (`id`, `tenNhaPhanPhoi`, `dienThoai`, `diaChi`) VALUES
-(1, 'Công Ty CP Đầu Tư Công Nghệ Việt Thái', '(024) 66801876', 'Tổ 3, P. Phú Đô, Q. Nam Từ Liêm, Hà Nội'),
-(2, 'Công Ty Cổ Phần Thực Phẩm Richy Miền Bắc', '(024) 33636610', 'CN Thị Trấn Phùng, TT. Phùng, H. Đan Phượng, Hà Nội'),
-(3, ' Công Ty TNHH Thương Mại & Tư Vấn Minh Anh', '(024) 35374223', '117/117 Thái Hà, Q. Đống Đa, Hà Nội'),
-(4, ' Công Ty TNHH Faso Việt Nam', '0981999231', 'B10 - 11, Lô 20, KĐT Mới Định Công, Q. Hoàng Mai,Hà Nội'),
-(5, 'Công Ty TNHH Thương Mại & Sản Xuất Hoàng Mai', '(024) 37282898', 'Tầng 9, HCMCC Tower,  249A Thụy Khuê, Q. Tây Hồ, Hà Nội'),
-(6, 'Công Ty Cổ Phần Phượng Hoàng - phân phối bánh kẹo nội địa và nhập khẩu Argentina', ' (024) 37830269', 'Số 18, Lô 2C, Trung Yên 2, P. Trung Yên, Q. Cầu Giấy, Hà Nội'),
-(7, 'Công Ty TNHH Hải Hà - Kotobuki', '(024) 36210074', '25 Trương Định, Hai Bà Trưng, Hà Nội');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `role`
---
-
-CREATE TABLE `role` (
-  `id` int(11) NOT NULL,
-  `tenRole` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `role`
---
-
-INSERT INTO `role` (`id`, `tenRole`) VALUES
-(1, 'Admin'),
-(2, 'Quản lí kho'),
-(3, 'Nhân viên thủ kho');
+(1, 'Công ty TNHH Hòa An', '0247 774 69 99', 'Km 52+200 Quốc lộ 5, Phường Cẩm Thượng, TP. Hải Dương'),
+(2, 'Công ty TNHH Samsung Electronics Việt Nam Thái Nguyên', '0208-3576666', 'KCN Yên Bình - Phường Đồng Tiến - Thị xã Phổ Yên - Tỉnh Thái Nguyên'),
+(3, 'Công ty TNHH LG Display Việt Nam Hải Phòng', '0225 6266 666', 'Economic Zone, Lot E, Trang Due Industrial Park An Duong District, KCN Đình Vũ, Cát Hải, Hải Phòng'),
+(4, 'Công Ty TNHH Thương Mại Và Đầu Tư Gia Phú', '0903 443 003', 'Số 61, Hẻm 72/73/40, phố Quan Nhân, Phường Nhân Chính, Quận Thanh Xuân, Hà Nội');
 
 -- --------------------------------------------------------
 
@@ -319,10 +276,19 @@ CREATE TABLE `sanpham` (
 --
 
 INSERT INTO `sanpham` (`id`, `tenSanPham`, `soLuong`, `donViId`, `nhaPhanPhoiId`, `danhMucId`) VALUES
-(1, 'Bánh Đậu Xanh', 2, 5, 1, 2),
-(2, 'Tủ Lạnh Panasonic', 1, 2, 4, 3),
+(1, 'Bánh Đậu Xanh Cao Cấp', 50, 1, 1, 2),
+(2, 'Tủ Lạnh Panasonic', 1, 2, 2, 3),
 (3, 'Nồi chiên không dầu An An', 3, 5, 2, 1),
-(4, 'Bếp ga Hiền Châu', 50, 4, 3, 4);
+(4, 'Bếp ga Hiền Châu', 50, 4, 2, 4),
+(5, 'Máy giặt LG', 10, 7, 3, 3),
+(6, 'Điều hòa Daikin', 20, 7, 3, 3),
+(7, 'Chảo chống dính', 23, 7, 3, 5),
+(8, 'Nồi áp suất cơ', 23, 7, 4, 6),
+(9, 'Cân điện tử', 10, 7, 4, 5),
+(10, 'Thang nhôm', 50, 7, 4, 5),
+(11, 'Bột đậu xanh Hòa An', 50, 5, 2, 2),
+(22, 'Đồ trang trí bằng bánh đậu xanh', 50, 1, 1, 2),
+(23, 'Khánh đen', 1, 2, 1, 1);
 
 --
 -- Indexes for dumped tables
@@ -332,15 +298,7 @@ INSERT INTO `sanpham` (`id`, `tenSanPham`, `soLuong`, `donViId`, `nhaPhanPhoiId`
 -- Indexes for table `admin`
 --
 ALTER TABLE `admin`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `role_id` (`role_id`);
-
---
--- Indexes for table `chucvu`
---
-ALTER TABLE `chucvu`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `nhanVienId` (`nhanVienId`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `danhmuc`
@@ -405,12 +363,6 @@ ALTER TABLE `nhaphanphoi`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `role`
---
-ALTER TABLE `role`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `sanpham`
 --
 ALTER TABLE `sanpham`
@@ -430,16 +382,10 @@ ALTER TABLE `admin`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT for table `chucvu`
---
-ALTER TABLE `chucvu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
 -- AUTO_INCREMENT for table `danhmuc`
 --
 ALTER TABLE `danhmuc`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `danhmuc_khohang`
@@ -457,7 +403,7 @@ ALTER TABLE `donvi`
 -- AUTO_INCREMENT for table `khohang`
 --
 ALTER TABLE `khohang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `lichsunhaphang`
@@ -481,35 +427,17 @@ ALTER TABLE `nhanvien`
 -- AUTO_INCREMENT for table `nhaphanphoi`
 --
 ALTER TABLE `nhaphanphoi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
--- AUTO_INCREMENT for table `role`
---
-ALTER TABLE `role`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `sanpham`
 --
 ALTER TABLE `sanpham`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- Constraints for dumped tables
 --
-
---
--- Constraints for table `admin`
---
-ALTER TABLE `admin`
-  ADD CONSTRAINT `admin_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `chucvu`
---
-ALTER TABLE `chucvu`
-  ADD CONSTRAINT `chucvu_ibfk_1` FOREIGN KEY (`nhanVienId`) REFERENCES `nhanvien` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `danhmuc_khohang`

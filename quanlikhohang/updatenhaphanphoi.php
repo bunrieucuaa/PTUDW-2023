@@ -42,7 +42,7 @@
 
         <!-- Sidebar -->
         <?php
-        include("../layout/menu.php");
+        include("sidebar.php");
         ?>
         <!-- End of Sidebar -->
 
@@ -54,7 +54,7 @@
 
                 <!-- Topbar -->
                 <?php
-                include("../layout/header.php");
+                include("header.php");
                 ?>
 
                 <?php
@@ -200,3 +200,22 @@
 </body>
 
 </html>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelector('#form').onsubmit = function () {
+            let tenNhaPhanPhoi = document.querySelector('#tenNhaPhanPhoi').value;
+            let diaChi = document.querySelector('#diaChi').value;
+            let dienThoai = document.querySelector('#dienThoai').value;
+
+            if (tenNhaPhanPhoi == "" || diaChi == "" || dienThoai == "") {
+                alert('Bạn chưa nhập đủ dữ liệu yêu cầu!');
+                return false;
+            }
+            if (dienThoai.length < 10) {
+                alert('Số điện thoại phải tối thiểu 10 số !');
+                return false;
+            }
+        }
+    })
+</script>

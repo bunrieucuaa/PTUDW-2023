@@ -35,7 +35,7 @@
 
         <!-- Sidebar -->
         <?php
-        include("../layout/menu.php");
+        include("sidebar.php");
         ?>
         <!-- End of Sidebar -->
 
@@ -47,7 +47,7 @@
 
                 <!-- Topbar -->
                 <?php
-                include("../layout/header.php");
+                include("header.php");
                 ?>
                 <!-- End of Topbar -->
 
@@ -70,6 +70,10 @@
                     }
                     ;
 
+                    if ($danhmuc->num_rows == 0) {
+                        echo "Kho hàng chưa có danh mục.<a href='javascript: history.go(-1)'>Trở lại</a>";
+                        exit;
+                    }
                     ?>
 
 
