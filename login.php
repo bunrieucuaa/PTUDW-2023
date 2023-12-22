@@ -1,21 +1,13 @@
 <?php
 session_start();
-require('../quanlikhohang/connect.php');
+require('./connection.php');
 
 $error = [];
-
 if (isset($_POST['submit'])) {
-    function sanitize($conn, $input)
-    {
-        return mysqli_real_escape_string($conn, $input);
-    }
-
-    $taikhoan = sanitize($conn, trim($_POST['TaiKhoan']));
-    $matkhau = sanitize($conn, trim($_POST['MatKhau']));
-
+    $taikhoan =  trim($_POST['TaiKhoan']);
+    $matkhau = trim($_POST['MatKhau']);
     $sql = "SELECT * FROM admin WHERE taiKhoan = '$taikhoan' AND matKhau = '$matkhau' LIMIT 1";
     $result = mysqli_query($conn, $sql);
-
     if ($result) {
         if (mysqli_num_rows($result) > 0) {
             $row = mysqli_fetch_assoc($result);
@@ -29,12 +21,12 @@ if (isset($_POST['submit'])) {
         $error[] = "Query failed: " . mysqli_error($conn);
     }
 }
-
 if (isset($_SESSION['user'])) {
     header('Location: index.php');
     exit;
 }
 ?>
+
 
 
 
@@ -49,7 +41,7 @@ if (isset($_SESSION['user'])) {
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Login</title>
+    <title>ADT Admin 2 - Login</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -65,12 +57,12 @@ if (isset($_SESSION['user'])) {
     <div class="container">
 
         <!-- Outer Row -->
-        <div class="row justify-content-center">
+        <div class="row justify-content-center d-flex align-items-center">
 
             <div class="col-xl-10 col-lg-12 col-md-9">
 
-                <div class="card o-hidden border-0 shadow-lg my-5">
-                    <div class="card-body p-0">
+                <div class="card o-hidden  shadow-lg my-5">
+                    <div class="card-body">
                         <!-- Nested Row within Card Body -->
                         <div class="row">
                             <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
@@ -98,7 +90,6 @@ if (isset($_SESSION['user'])) {
                                             Login
                                         </button>
                                         <hr>
-                                        
                                     </form>
                                 </div>
                             </div>

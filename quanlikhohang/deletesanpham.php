@@ -1,13 +1,14 @@
 <?php
-// session_start();
-// if (!isset($_SESSION['username']) || $_SESSION['role'] != 1) {
-//     header('location:1-displayAdmin.php');
-//     exit;
-// }
-
-
+session_start();
+if (!isset($_SESSION['user'])) {
+    header('Location: login.php');
+    exit;
+}
+require('../connection.php');
+?>
+<?php
 if (isset($_GET['deletedid'])) {
-    require 'connect.php';
+    require '../connection.php';
     $id = $_GET['deletedid'];
     $sql = "DELETE FROM sanpham WHERE id='$id'";
     if (mysqli_query($conn, $sql)) {
@@ -18,4 +19,3 @@ if (isset($_GET['deletedid'])) {
 } else {
     header('Location: dssanpham.php?status=id_not_found');
 }
-?>

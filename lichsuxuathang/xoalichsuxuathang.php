@@ -4,7 +4,7 @@ if (!isset($_SESSION['user'])) {
     header('Location: login.php');
     exit;
 }
-require('../lichsunhaphang/connection.php');
+require('../connection.php');
 
 if (isset($_GET['id'])) {
     $id = $_GET['id'];

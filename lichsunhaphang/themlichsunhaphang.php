@@ -1,12 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
 <?php
 session_start();
 if (!isset($_SESSION['user'])) {
     header('Location: login.php');
     exit;
 }
-require('connection.php');
+require('../connection.php');
 $title = "Thêm lịch sử nhập hàng";
 $error = [];
 
@@ -51,16 +49,17 @@ if (isset($_POST['submit'])) {
     }
 }
 ?>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 </title>
+    <title>ADT Admin 2 </title>
 
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -69,7 +68,41 @@ if (isset($_POST['submit'])) {
     <link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <!-- Add Bootstrap CSS link -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var form = document.querySelector('form');
 
+            form.addEventListener('submit', function(event) {
+                var nhanVienId = form.querySelector('[name="nhanVienId"]').value;
+                var sanPhamId = form.querySelector('[name="sanPhamId"]').value;
+                var soLuong = form.querySelector('[name="soLuong"]').value;
+                var nhaPhanPhoiId = form.querySelector('[name="nhaPhanPhoiId"]').value;
+                var donViId = form.querySelector('[name="donViId"]').value;
+                var khoHangId = form.querySelector('[name="khoHangId"]').value;
+                var thoiGian = form.querySelector('[name="thoiGian"]').value;
+
+                var errors = [];
+
+                if (nhanVienId === '-1' || sanPhamId === '-1' || nhaPhanPhoiId === '-1') {
+                    errors.push('Vui lòng chọn giá trị cho tất cả các trường bắt buộc.');
+                }
+
+                if (soLuong === '' || soLuong <= 0 || isNaN(soLuong)) {
+                    errors.push('Số lượng phải là một số dương và không được để trống.');
+                }
+
+
+                if (thoiGian === '' || thoiGian === null) {
+                    errors.push('Vui lòng chọn thời gian.');
+                }
+
+                if (errors.length > 0) {
+                    event.preventDefault();
+                    alert('Có lỗi xảy ra:\n' + errors.join('\n'));
+                }
+            });
+        });
+    </script>
 </head>
 
 <body id="page-top">
