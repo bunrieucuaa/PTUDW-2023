@@ -73,6 +73,11 @@
                         $tenNPP = $rowNPP['tenNhaPhanPhoi'];
 
                         $sanpham = mysqli_query($conn, $sql);
+
+                        if ($sanpham->num_rows == 0) {
+                            echo "Nhà phân phối này chưa có sản phẩm nào.<a href='javascript: history.go(-1)'>Trở lại</a>";
+                            exit;
+                        }
                         $counter = 1;
                     }
 

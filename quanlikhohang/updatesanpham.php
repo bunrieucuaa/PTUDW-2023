@@ -256,3 +256,17 @@
 </body>
 
 </html>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelector('#form').onsubmit = function () {
+            let tenSanPham = document.querySelector('#tenSanPham').value;
+            let soLuong = document.querySelector('#soLuong').value;
+
+            if (tenSanPham == "" || soLuong == "") {
+                alert('Bạn chưa nhập đủ dữ liệu yêu cầu!');
+                return false;
+            }
+        }
+    })
+</script>

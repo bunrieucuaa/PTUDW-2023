@@ -67,6 +67,11 @@
 
                     $counter = 1;
 
+                    if ($sanpham->num_rows == 0) {
+                        echo "Chưa có danh sách sản phẩm.<a href='javascript: history.go(-1)'>Trở lại</a>";
+                        exit;
+                    }
+
                     ;
 
                     ?>

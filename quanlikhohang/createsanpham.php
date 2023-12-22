@@ -102,16 +102,16 @@
                                     <div class="col-lg-5 d-none d-lg-block bg-image"></div>
                                     <div class="col-lg-7">
                                         <div class="p-5">
-                                            <form class="user" action="" method="post">
+                                            <form class="user" action="" method="post" id="form">
                                                 <h1 class="h4 text-gray-900 mb-2">Tên sản phẩm</h1>
                                                 <div class="form-group">
-                                                    <input type="text" name="tenSanPham" class="form-control" id=""
-                                                        placeholder="Tên sản phẩm">
+                                                    <input type="text" name="tenSanPham" class="form-control"
+                                                        id="tenSanPham" placeholder="Tên sản phẩm">
                                                 </div>
                                                 <h1 class="h4 text-gray-900 mb-2">Số lượng</h1>
                                                 <div class="form-group">
-                                                    <input type="number" name="soLuong" class="form-control" id=""
-                                                        name="soLuong" placeholder="Số lượng">
+                                                    <input type="number" name="soLuong" class="form-control"
+                                                        id="soLuong" name="soLuong" placeholder="Số lượng">
                                                 </div>
 
                                                 <h1 class="h4 text-gray-900 mb-2"> Đợn vị </h1>
@@ -216,3 +216,17 @@
 </body>
 
 </html>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelector('#form').onsubmit = function () {
+            let tenSanPham = document.querySelector('#tenSanPham').value;
+            let soLuong = document.querySelector('#soLuong').value;
+
+            if (tenSanPham == "" || soLuong == "") {
+                alert('Bạn chưa nhập đủ dữ liệu yêu cầu!');
+                return false;
+            }
+        }
+    })
+</script>

@@ -70,6 +70,10 @@
                     }
                     ;
 
+                    if ($danhmuc->num_rows == 0) {
+                        echo "Kho hàng chưa có danh mục.<a href='javascript: history.go(-1)'>Trở lại</a>";
+                        exit;
+                    }
                     ?>
 
 

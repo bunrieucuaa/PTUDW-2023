@@ -241,3 +241,16 @@
 </body>
 
 </html>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelector('#form').onsubmit = function () {
+            let tenKhoHang = document.querySelector('#tenKhoHang').value;
+            let diaChi = document.querySelector('#diaChi').value;
+            if (tenKhoHang == "" || diaChi == "") {
+                alert('Bạn chưa nhập đủ dữ liệu yêu cầu!');
+                return false;
+            }
+        }
+    })
+</script>

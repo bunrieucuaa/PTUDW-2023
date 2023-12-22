@@ -124,6 +124,11 @@
 
                                         $nhaphanphoi = mysqli_query($conn, $sql);
                                         $counter = 1;
+
+                                        if ($nhaphanphoi->num_rows == 0) {
+                                            echo "Chưa có nhà phân phối này.<a href='javascript: history.go(-1)'>Trở lại</a>";
+                                            exit;
+                                        }
                                         ?>
 
                                         <?php while ($row = $nhaphanphoi->fetch_assoc()) {

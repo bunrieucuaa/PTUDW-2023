@@ -59,7 +59,7 @@
                 <?php
                 require "connect.php";
                 $sqlTk = "SELECT * FROM admin";
-                $sqlNv = "SELECT * FROM nhanvien";  
+                $sqlNv = "SELECT * FROM nhanvien";
 
                 $taikhoan = $conn->query($sqlTk);
                 $nhanvien = $conn->query($sqlNv);
@@ -104,15 +104,15 @@
                                     <div class="col-lg-5 d-none d-lg-block bg-image"></div>
                                     <div class="col-lg-7">
                                         <div class="p-5">
-                                            <form class="user" action="" method="post">
+                                            <form class="user" action="" method="post" id="form">
                                                 <h1 class="h4 text-gray-900 mb-2">Tên kho hàng</h1>
                                                 <div class="form-group">
-                                                    <input type="text" name="tenKhoHang" class="form-control" id=""
-                                                        placeholder="Tên kho hàng">
+                                                    <input type="text" name="tenKhoHang" class="form-control"
+                                                        id="tenKhoHang" placeholder="Tên kho hàng">
                                                 </div>
                                                 <h1 class="h4 text-gray-900 mb-2">Địa chỉ</h1>
                                                 <div class="form-group">
-                                                    <input type="text" name="diaChi" class="form-control" id=""
+                                                    <input type="text" name="diaChi" class="form-control" id="diaChi"
                                                         name="diaChi" placeholder="Địa chỉ">
                                                 </div>
 
@@ -204,3 +204,17 @@
 </body>
 
 </html>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelector('#form').onsubmit = function () {
+            let tenKhoHang = document.querySelector('#tenKhoHang').value;
+            let diaChi = document.querySelector('#diaChi').value;
+            if (tenKhoHang == "" || diaChi == "") {
+                alert('Bạn chưa nhập đủ dữ liệu yêu cầu!');
+                return false;
+            }
+        }
+    })
+</script>
