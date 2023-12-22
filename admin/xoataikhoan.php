@@ -1,49 +1,42 @@
 <?php
 $status = isset($_GET["status"]) ? $_GET["status"] : ""; ?>
-<?php if ($status == 'add_success'): ?>
+<?php if ($status == 'add_success') : ?>
     <div class="alert alert-success" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                aria-hidden="true">&times;</span></button>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <strong>Thêm thành công</strong>
     </div>
-<?php elseif ($status == 'add_fail'): ?>
+<?php elseif ($status == 'add_fail') : ?>
     <div class="alert alert-danger" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                aria-hidden="true">&times;</span></button>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <strong>Thêm thất bại</strong>
     </div>
-<?php elseif ($status == 'del_success'): ?>
+<?php elseif ($status == 'del_success') : ?>
     <div class="alert alert-success" role="alert">
-        <button type="buDtton" class="close" data-dismiss="alert" aria-label="Close"><span
-                aria-hidden="true">&times;</span></button>
+        <button type="buDtton" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <strong>Xóa thành công</strong>
     </div>
-<?php elseif ($status == 'del_fail'): ?>
+<?php elseif ($status == 'del_fail') : ?>
     <div class="alert alert-danger" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                aria-hidden="true">&times;</span></button>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <strong>Xóa thất bại</strong>
     </div>
-<?php elseif ($status == 'update_success'): ?>
+<?php elseif ($status == 'update_success') : ?>
     <div class="alert alert-success" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                aria-hidden="true">&times;</span></button>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <strong>Sửa thành công</strong>
     </div>
-<?php elseif ($status == 'update_fail'): ?>
+<?php elseif ($status == 'update_fail') : ?>
     <div class="alert alert-danger" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                aria-hidden="true">&times;</span></button>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <strong>Sửa thất bại</strong>
     </div>
-<?php elseif ($status == 'id_not_found'): ?>
+<?php elseif ($status == 'id_not_found') : ?>
     <div class="alert alert-danger" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                aria-hidden="true">&times;</span></button>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <strong> Không có bản ghi này ! </strong>
     </div>
 <?php endif;
-require('connection.php');
+require('../connection.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $id = mysqli_real_escape_string($conn, $_GET['id']);
@@ -51,7 +44,6 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
     if (mysqli_query($conn, $sql)) {
         header("Location: admin.php? status=del_success");
-
     } else {
         header("Location: admin.php? status=del_fail");
     }

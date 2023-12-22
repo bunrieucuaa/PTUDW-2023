@@ -1,3 +1,11 @@
+<?php
+session_start();
+if (!isset($_SESSION['user'])) {
+    header('Location: login.php');
+    exit;
+}
+require('../connection.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,13 +18,11 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Tables</title>
+    <title>ADT Admin 2 - Tables</title>
 
     <!-- Custom fonts for this template -->
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="../css/sb-admin-2.min.css" rel="stylesheet">
@@ -34,7 +40,7 @@
 
         <!-- Sidebar -->
         <?php
-        include("sidebar.php");
+        include("../layout/menu.php");
         ?>
         <!-- End of Sidebar -->
 
@@ -46,7 +52,7 @@
 
                 <!-- Topbar -->
                 <?php
-                include("header.php");
+                include("../layout/header.php");
                 ?>
                 <!-- End of Topbar -->
 
@@ -55,7 +61,7 @@
 
                     <?php
                     if (isset($_GET['nhaPhanPhoiId'])) {
-                        require 'connect.php';
+                        require '../connection.php';
                         $nhaPhanPhoiId = $_GET['nhaPhanPhoiId'];
                         $sql = "SELECT sanpham.*, danhmuc.tenDanhMuc, donvi.tenDonVi, nhaphanphoi.tenNhaPhanPhoi
                             FROM sanpham, danhmuc, donvi, nhaphanphoi
@@ -116,7 +122,7 @@
                                             $soLuong = $row['soLuong'];
                                             $donVi = $row['tenDonVi'];
                                             $danhMuc = $row['tenDanhMuc'];
-                                            ?>
+                                        ?>
                                             <tr>
                                                 <td>
                                                     <?php echo $cnt; ?>
@@ -135,7 +141,7 @@
                                                 </td>
                                             <?php } //Dóng while
                                         ; ?>
-                                        </tr>
+                                            </tr>
                                     </tbody>
                                 </table>
                             </div>

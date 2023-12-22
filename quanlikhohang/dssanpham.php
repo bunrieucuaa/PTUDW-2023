@@ -1,6 +1,13 @@
+<?php
+session_start();
+if (!isset($_SESSION['user'])) {
+    header('Location: login.php');
+    exit;
+}
+require('../connection.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
-
 
 <head>
 
@@ -10,13 +17,11 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Tables</title>
+    <title>ADT Admin 2 - Tables</title>
 
     <!-- Custom fonts for this template -->
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="../css/sb-admin-2.min.css" rel="stylesheet">
@@ -34,7 +39,7 @@
 
         <!-- Sidebar -->
         <?php
-        include("sidebar.php");
+        include("../layout/menu.php");
         ?>
         <!-- End of Sidebar -->
 
@@ -46,14 +51,14 @@
 
                 <!-- Topbar -->
                 <?php
-                include("header.php");
+                include("../layout/header.php");
                 ?>
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <?php
-                    require 'connect.php';
+                    require '../connection.php';
                     $sql = "SELECT sanpham.*, danhmuc.tenDanhMuc, danhmuc.maDanhMuc, donvi.tenDonVi,
                         nhaphanphoi.tenNhaPhanPhoi
                             FROM sanpham, danhmuc, donvi, nhaphanphoi
@@ -70,9 +75,7 @@
                     if ($sanpham->num_rows == 0) {
                         echo "Chưa có danh sách sản phẩm.<a href='javascript: history.go(-1)'>Trở lại</a>";
                         exit;
-                    }
-
-                    ;
+                    };
 
                     ?>
                     <!-- Page Heading -->
@@ -94,46 +97,39 @@
                         </div>
                         <div class="card-body">
                             <?php $status = isset($_GET["status"]) ? $_GET["status"] : ""; ?>
-                            <?php if ($status == 'add_success'): ?>
+                            <?php if ($status == 'add_success') : ?>
                                 <div class="alert alert-success" role="alert">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                                            aria-hidden="true">&times;</span></button>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                     <strong>Thêm thành công</strong>
                                 </div>
-                            <?php elseif ($status == 'add_fail'): ?>
+                            <?php elseif ($status == 'add_fail') : ?>
                                 <div class="alert alert-danger" role="alert">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                                            aria-hidden="true">&times;</span></button>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                     <strong>Thêm thất bại</strong>
                                 </div>
-                            <?php elseif ($status == 'del_success'): ?>
+                            <?php elseif ($status == 'del_success') : ?>
                                 <div class="alert alert-success" role="alert">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                                            aria-hidden="true">&times;</span></button>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                     <strong>Xóa thành công</strong>
                                 </div>
-                            <?php elseif ($status == 'del_fail'): ?>
+                            <?php elseif ($status == 'del_fail') : ?>
                                 <div class="alert alert-danger" role="alert">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                                            aria-hidden="true">&times;</span></button>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                     <strong>Xóa thất bại</strong>
                                 </div>
-                            <?php elseif ($status == 'update_success'): ?>
+                            <?php elseif ($status == 'update_success') : ?>
                                 <div class="alert alert-success" role="alert">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                                            aria-hidden="true">&times;</span></button>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                     <strong>Sửa thành công</strong>
                                 </div>
-                            <?php elseif ($status == 'update_fail'): ?>
+                            <?php elseif ($status == 'update_fail') : ?>
                                 <div class="alert alert-danger" role="alert">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                                            aria-hidden="true">&times;</span></button>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                     <strong>Sửa thất bại</strong>
                                 </div>
-                            <?php elseif ($status == 'id_not_found'): ?>
+                            <?php elseif ($status == 'id_not_found') : ?>
                                 <div class="alert alert-danger" role="alert">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                                            aria-hidden="true">&times;</span></button>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                     <strong> Không có bản ghi này ! </strong>
                                 </div>
                             <?php endif; ?>
@@ -160,7 +156,7 @@
                                             $donVi = $row['tenDonVi'];
                                             $danhMuc = $row['tenDanhMuc'];
                                             $nhaPhanPhoi = $row['tenNhaPhanPhoi'];
-                                            ?>
+                                        ?>
                                             <tr>
                                                 <td>
                                                     <?php echo $cnt; ?>
@@ -182,20 +178,17 @@
                                                 </td>
                                                 <?php { ?>
                                                     <td>
-                                                        <a href="updatesanpham.php?updateid=<?php echo $id; ?>"
-                                                            style='color: blue'>
+                                                        <a href="updatesanpham.php?updateid=<?php echo $id; ?>" style='color: blue'>
                                                             <i class="fas fa-edit"></i>
                                                         </a>
-                                                        <a href="deletesanpham.php?deletedid=<?php echo $id; ?>"
-                                                            style='color: red'>
+                                                        <a href="deletesanpham.php?deletedid=<?php echo $id; ?>" style='color: red'>
                                                             <i class="fas fa-trash"></i>
                                                         </a>
                                                     </td>
-                                                <?php }
-                                                ; ?>
+                                                <?php }; ?>
                                             <?php } //Dóng while
                                         ; ?>
-                                        </tr>
+                                            </tr>
                                     </tbody>
                                 </table>
                             </div>

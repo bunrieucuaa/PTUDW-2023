@@ -1,6 +1,13 @@
+<?php
+session_start();
+if (!isset($_SESSION['user'])) {
+    header('Location: login.php');
+    exit;
+}
+require('../connection.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
-
 
 <head>
 
@@ -10,13 +17,11 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Tables</title>
+    <title>ADT Admin 2 - Tables</title>
 
     <!-- Custom fonts for this template -->
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="../css/sb-admin-2.min.css" rel="stylesheet">
@@ -42,7 +47,7 @@
 
         <!-- Sidebar -->
         <?php
-        include("sidebar.php");
+        include("../layout/menu.php");
         ?>
         <!-- End of Sidebar -->
 
@@ -54,12 +59,12 @@
 
                 <!-- Topbar -->
                 <?php
-                include("header.php");
+                include("../layout/header.php");
                 ?>
 
                 <?php
                 if (isset($_GET['updateid'])) {
-                    require 'connect.php';
+                    require '../connection.php';
                     $id = $_GET['updateid'];
                     $sql = "SELECT * FROM sanpham WHERE id=$id";
                     $result = mysqli_query($conn, $sql);
@@ -70,7 +75,6 @@
                     $donViId = $row['donViId'];
                     $danhMucId = $row['danhMucId'];
                     $nhaPhanPhoiId = $row['nhaPhanPhoiId'];
-
                 } else {
                     header('Location: dssanpham.php?status=id_not_found');
                 }
@@ -115,13 +119,11 @@
                                             <form class="user" action="" method="post">
                                                 <h1 class="h4 text-gray-900 mb-2">Tên sản phẩm </h1>
                                                 <div class="form-group">
-                                                    <input type="text" name="tenSanPham" class="form-control"
-                                                        value="<?php echo $tenSanPham ?>" placeholder="Tên sản phẩm">
+                                                    <input type="text" name="tenSanPham" class="form-control" value="<?php echo $tenSanPham ?>" placeholder="Tên sản phẩm">
                                                 </div>
                                                 <h1 class="h4 text-gray-900 mb-2"> Số lượng </h1>
                                                 <div class="form-group">
-                                                    <input type="text" name="soLuong" class="form-control"
-                                                        value="<?php echo $soLuong ?>" placeholder="Số lượng">
+                                                    <input type="text" name="soLuong" class="form-control" value="<?php echo $soLuong ?>" placeholder="Số lượng">
                                                 </div>
 
                                                 <h1 class="h4 text-gray-900 mb-2"> Danh Mục </h1>
@@ -129,20 +131,19 @@
 
                                                     <select name="danhMucId" class="form-control">
                                                         <?php
-                                                        require "connect.php";
+                                                        require "../connection.php";
                                                         $select_danhmuc = "SELECT * FROM danhmuc";
                                                         $result_danhmuc = $conn->query($select_danhmuc);
 
                                                         while ($row_danhmuc = $result_danhmuc->fetch_assoc()) {
                                                             $tenDanhMuc = $row_danhmuc['tenDanhMuc'];
 
-                                                            ?>
+                                                        ?>
                                                             <option value="<?php echo $row_danhmuc['id'] ?>" <?php if ($row_danhmuc['id'] == $danhMucId)
-                                                                   echo 'selected'; ?>>
+                                                                                                                    echo 'selected'; ?>>
                                                                 <?php echo "$tenDanhMuc" ?>
                                                             </option>
-                                                        <?php }
-                                                        ; ?>
+                                                        <?php }; ?>
                                                     </select>
                                                 </div>
 
@@ -152,20 +153,19 @@
 
                                                     <select name="donViId" class="form-control">
                                                         <?php
-                                                        require "connect.php";
+                                                        require "../connection.php";
                                                         $select_donvi = "SELECT * FROM donvi";
                                                         $result_donvi = $conn->query($select_donvi);
 
                                                         while ($row_dv = $result_donvi->fetch_assoc()) {
                                                             $tenDv = $row_dv['tenDonVi'];
 
-                                                            ?>
+                                                        ?>
                                                             <option value="<?php echo $row_dv['id'] ?>" <?php if ($row_dv['id'] == $taiKhoanId)
-                                                                   echo 'selected'; ?>>
+                                                                                                            echo 'selected'; ?>>
                                                                 <?php echo "$tenDv" ?>
                                                             </option>
-                                                        <?php }
-                                                        ; ?>
+                                                        <?php }; ?>
                                                     </select>
                                                 </div>
 
@@ -176,31 +176,27 @@
 
                                                     <select class="form-control" name="nhaPhanPhoiId">
                                                         <?php
-                                                        require "connect.php";
+                                                        require "../connection.php";
                                                         $select_nhapp = "SELECT * FROM nhaphanphoi";
                                                         $result_nhapp = mysqli_query($conn, $select_nhapp);
 
                                                         while ($row_NPP = $result_nhapp->fetch_assoc()) {
                                                             $tenNPP = $row_NPP['tenNhaPhanPhoi'];
 
-                                                            ?>
+                                                        ?>
                                                             <option value="<?php echo $row_NPP['id'] ?>" <?php if ($row_NPP['id'] == $nhaPhanPhoiId)
-                                                                   echo 'selected'; ?>>
+                                                                                                                echo 'selected'; ?>>
                                                                 <?php echo "$tenNPP" ?>
                                                             </option>
-                                                        <?php }
-                                                        ; ?>
+                                                        <?php }; ?>
                                                     </select>
                                                 </div>
                                                 <div class="form-group row">
                                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                                        <input type="submit" name="submit"
-                                                            class="btn btn-primary btn-user btn-block" id=""
-                                                            placeholder="Cập nhật sản phẩm">
+                                                        <input type="submit" name="submit" class="btn btn-primary btn-user btn-block" id="" placeholder="Cập nhật sản phẩm">
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <a href="javascript:history.back()"
-                                                            class="btn btn-danger btn-user btn-block">
+                                                        <a href="javascript:history.back()" class="btn btn-danger btn-user btn-block">
                                                             Hủy bỏ
                                                         </a>
                                                     </div>
@@ -258,8 +254,8 @@
 </html>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        document.querySelector('#form').onsubmit = function () {
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelector('#form').onsubmit = function() {
             let tenSanPham = document.querySelector('#tenSanPham').value;
             let soLuong = document.querySelector('#soLuong').value;
 

@@ -10,9 +10,7 @@
     <meta name="author" content="">
     <title>Thêm tài khoản</title>
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="../css/sb-admin-2.min.css" rel="stylesheet">
     <link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
@@ -25,15 +23,14 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+                <div class="sidebar-brand-text mx-3">ADT Admin <sup>2</sup></div>
             </a>
             <hr class="sidebar-divider">
             <div class="sidebar-heading">
                 Addons
             </div>
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
                     <span>Pages</span>
                 </a>
@@ -71,7 +68,7 @@
                     </form>
                 </nav>
                 <?php
-                require('connection.php');
+                require('../connection.php');
 
                 if (isset($_POST['submit'])) {
                     $tenTaiKhoan = mysqli_real_escape_string($conn, $_POST['tenTaiKhoan']);
@@ -84,14 +81,12 @@
                     $result = mysqli_query($conn, $sql);
                     if ($result) {
                         header("Location: admin.php ? status=add_success");
-
                     } else {
                         header("Location: admin.php ? status=add_fail");
                     }
 
                     mysqli_close($conn);
                 } else {
-
                 }
                 ?>
                 <div class="container-fluid">
@@ -111,8 +106,7 @@
                                 <form action="" method="POST">
                                     <div class="form-group">
                                         <label for="tenTaiKhoan">Họ và tên:</label>
-                                        <input type="text" class="form-control" id="tenTaiKhoan" name="tenTaiKhoan"
-                                            required>
+                                        <input type="text" class="form-control" id="tenTaiKhoan" name="tenTaiKhoan" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="taiKhoan">Tài khoản:</label>
@@ -128,8 +122,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="soDienThoai">Số điện thoại:</label>
-                                        <input type="tel" class="form-control" id="soDienThoai" name="soDienThoai"
-                                            required>
+                                        <input type="tel" class="form-control" id="soDienThoai" name="soDienThoai" required>
                                     </div>
 
                                     <button name="submit" type="submit" class="btn btn-primary">Thêm Tài Khoản</button>
@@ -143,7 +136,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
+                        <span>Copyright &copy; ATD Website 2023</span>
                     </div>
                 </div>
             </footer>

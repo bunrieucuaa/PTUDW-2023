@@ -1,6 +1,13 @@
+<?php
+session_start();
+if (!isset($_SESSION['user'])) {
+    header('Location: login.php');
+    exit;
+}
+require('../connection.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
-
 
 <head>
 
@@ -10,13 +17,11 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Tables</title>
+    <title>ADT Admin 2 - Tables</title>
 
     <!-- Custom fonts for this template -->
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="../css/sb-admin-2.min.css" rel="stylesheet">
@@ -42,7 +47,7 @@
 
         <!-- Sidebar -->
         <?php
-        include("sidebar.php");
+        include("../layout/menu.php");
         ?>
         <!-- End of Sidebar -->
 
@@ -54,12 +59,12 @@
 
                 <!-- Topbar -->
                 <?php
-                include("header.php");
+                include("../layout/header.php");
                 ?>
 
                 <?php
                 if (isset($_GET['updateid'])) {
-                    require 'connect.php';
+                    require '../connection.php';
                     $id = $_GET['updateid'];
                     $sql = "SELECT * FROM khohang WHERE id=$id";
                     $result = mysqli_query($conn, $sql);
@@ -69,7 +74,6 @@
                     $diaChi = $row['diaChi'];
                     $taiKhoanId = $row['taiKhoanId'];
                     $nhanVienId = $row['nhanVienId'];
-
                 } else {
                     header('Location: dskhohang.php?status=id_not_found');
                 }
@@ -122,14 +126,11 @@
                                             <form class="user" action="" method="post">
                                                 <h1 class="h4 text-gray-900 mb-2">Tên kho hàng</h1>
                                                 <div class="form-group">
-                                                    <input type="text" name="tenKhoHang" class="form-control"
-                                                        value="<?php echo $tenKhoHang ?>" placeholder="Tên kho hàng">
+                                                    <input type="text" name="tenKhoHang" class="form-control" value="<?php echo $tenKhoHang ?>" placeholder="Tên kho hàng">
                                                 </div>
                                                 <h1 class="h4 text-gray-900 mb-2"> Địa chỉ </h1>
                                                 <div class="form-group">
-                                                    <input type="text" name="diaChi" class="form-control"
-                                                        value="<?php echo $diaChi ?>" name="diaChi"
-                                                        placeholder="Địa chỉ">
+                                                    <input type="text" name="diaChi" class="form-control" value="<?php echo $diaChi ?>" name="diaChi" placeholder="Địa chỉ">
                                                 </div>
 
                                                 <h1 class="h4 text-gray-900 mb-2"> Quản lí </h1>
@@ -137,20 +138,19 @@
 
                                                     <select name="taiKhoanId" class="form-control">
                                                         <?php
-                                                        require "connect.php";
+                                                        require "../connection.php";
                                                         $select_taikhoan = "SELECT * FROM admin";
                                                         $result_taikhoan = $conn->query($select_taikhoan);
 
                                                         while ($row_tk = $result_taikhoan->fetch_assoc()) {
                                                             $tenTk = $row_tk['tenTaiKhoan'];
 
-                                                            ?>
+                                                        ?>
                                                             <option value="<?php echo $row_tk['id'] ?>" <?php if ($row_tk['id'] == $taiKhoanId)
-                                                                   echo 'selected'; ?>>
+                                                                                                            echo 'selected'; ?>>
                                                                 <?php echo "$tenTk" ?>
                                                             </option>
-                                                        <?php }
-                                                        ; ?>
+                                                        <?php }; ?>
                                                     </select>
                                                 </div>
 
@@ -161,31 +161,27 @@
 
                                                     <select class="form-control" name="nhanVienId">
                                                         <?php
-                                                        require "connect.php";
+                                                        require "../connection.php";
                                                         $select_nhanvien = "SELECT * FROM nhanvien";
                                                         $result_nhanvien = mysqli_query($conn, $select_nhanvien);
 
                                                         while ($row_nv = $result_nhanvien->fetch_assoc()) {
                                                             $tenNv = $row_nv['tenNhanVien'];
 
-                                                            ?>
+                                                        ?>
                                                             <option value="<?php echo $row_nv['id'] ?>" <?php if ($row_nv['id'] == $nhanVienId)
-                                                                   echo 'selected'; ?>>
+                                                                                                            echo 'selected'; ?>>
                                                                 <?php echo "$tenNv" ?>
                                                             </option>
-                                                        <?php }
-                                                        ; ?>
+                                                        <?php }; ?>
                                                     </select>
                                                 </div>
                                                 <div class="form-group row">
                                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                                        <input type="submit" name="submit"
-                                                            class="btn btn-primary btn-user btn-block" id=""
-                                                            placeholder="Cập nhật kho">
+                                                        <input type="submit" name="submit" class="btn btn-primary btn-user btn-block" id="" placeholder="Cập nhật kho">
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <a href="javascript:history.back()"
-                                                            class="btn btn-danger btn-user btn-block">
+                                                        <a href="javascript:history.back()" class="btn btn-danger btn-user btn-block">
                                                             Hủy bỏ
                                                         </a>
                                                     </div>
@@ -243,8 +239,8 @@
 </html>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        document.querySelector('#form').onsubmit = function () {
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelector('#form').onsubmit = function() {
             let tenKhoHang = document.querySelector('#tenKhoHang').value;
             let diaChi = document.querySelector('#diaChi').value;
             if (tenKhoHang == "" || diaChi == "") {

@@ -1,19 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
 <?php
 session_start();
-if (!isset($_SESSION['user'])) {
-    header('Location: login.php');
-    exit;
-}
-
-require('connection.php');
+require('../connection.php');
 $title = "Sửa lịch sử nhập hàng";
 $error = [];
-
 if (isset($_GET['id'])) {
     $id = mysqli_real_escape_string($conn, $_GET['id']);
-
     $query = "SELECT l.*, n.tenNhanVien, s.tenSanPham, np.tenNhaPhanPhoi, d.tenDonVi, kh.tenKhoHang
               FROM lichsunhaphang l
               INNER JOIN nhanvien n ON l.nhanVienId = n.id
@@ -22,32 +13,25 @@ if (isset($_GET['id'])) {
               INNER JOIN donvi d ON l.donViId = d.id
               INNER JOIN khohang kh ON l.khoHangId = kh.id
               WHERE l.id = '$id'";
-
     $result = mysqli_query($conn, $query);
-
-    if ($result && mysqli_num_rows($result) > 0) {
-        $row = mysqli_fetch_assoc($result);
-        $existingNhanVienId = $row['nhanVienId'];
-        $nhanVienName = $row['tenNhanVien'];
-        $existingSanPhamId = $row['sanPhamId'];
-
-        $sanPhamName = $row['tenSanPham'];
-        $existingSoLuong = $row['soLuong'];
-
-        $existingNhaPhanPhoiId = $row['nhaPhanPhoiId'];
-        $nhaPhanPhoiName = $row['tenNhaPhanPhoi'];
-        $existingDonViId = $row['donViId'];
-
-        $donViName = $row['tenDonVi'];
-        $existingKhoHangId = $row['khoHangId'];
-
-        $khoHangName = $row['tenKhoHang'];
-        $existingThoiGian = $row['thoiGian'];
+    if ($result && $row = mysqli_fetch_assoc($result)) {
+        extract($row);
+        $existingNhanVienId = $nhanVienId;
+        $nhanVienName = $tenNhanVien;
+        $existingSanPhamId = $sanPhamId;
+        $sanPhamName = $tenSanPham;
+        $existingSoLuong = $soLuong;
+        $existingNhaPhanPhoiId = $nhaPhanPhoiId;
+        $nhaPhanPhoiName = $tenNhaPhanPhoi;
+        $existingDonViId = $donViId;
+        $donViName = $tenDonVi;
+        $existingKhoHangId = $khoHangId;
+        $khoHangName = $tenKhoHang;
+        $existingThoiGian = $thoiGian;
     } else {
         $error[] = "Không tìm thấy dữ liệu";
     }
 }
-
 $queryNhanVien = "SELECT id, tenNhanVien FROM nhanvien";
 $resultNhanVien = mysqli_query($conn, $queryNhanVien);
 
@@ -64,23 +48,13 @@ $queryKhoHang = "SELECT id, tenKhoHang FROM khohang";
 $resultKhoHang = mysqli_query($conn, $queryKhoHang);
 
 if (isset($_POST['submit'])) {
-    $nhanVienId = mysqli_real_escape_string($conn, $_POST['nhanVienId']);
-    $sanPhamId = mysqli_real_escape_string($conn, $_POST['sanPhamId']);
-    $soLuong = mysqli_real_escape_string($conn, $_POST['soLuong']);
-    $nhaPhanPhoiId = mysqli_real_escape_string($conn, $_POST['nhaPhanPhoiId']);
-    $donViId = mysqli_real_escape_string($conn, $_POST['donViId']);
-    $khoHangId = mysqli_real_escape_string($conn, $_POST['khoHangId']);
-    $thoiGian = mysqli_real_escape_string($conn, $_POST['thoiGian']);
-
     $updateQuery = "UPDATE lichsunhaphang
-                    SET nhanVienId = '$nhanVienId', sanPhamId = '$sanPhamId', soLuong = '$soLuong',
-                        nhaPhanPhoiId = '$nhaPhanPhoiId', donViId = '$donViId', khoHangId = '$khoHangId',
-                        thoiGian = '$thoiGian'
+                    SET nhanVienId = '$_POST[nhanVienId]', sanPhamId = '$_POST[sanPhamId]', soLuong = '$_POST[soLuong]',
+                        nhaPhanPhoiId = '$_POST[nhaPhanPhoiId]', donViId = '$_POST[donViId]', khoHangId = '$_POST[khoHangId]',
+                        thoiGian = '$_POST[thoiGian]'
                     WHERE id = '$id'";
 
-    $updateResult = mysqli_query($conn, $updateQuery);
-
-    if ($updateResult) {
+    if (mysqli_query($conn, $updateQuery)) {
         header("Location: lichsunhaphang.php?status=update_success");
         exit();
     } else {
@@ -88,8 +62,10 @@ if (isset($_POST['submit'])) {
         header("Location: lichsunhaphang.php?status=update_fail");
     }
 }
-
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
 
 </html>
 
@@ -110,7 +86,7 @@ if (isset($_POST['submit'])) {
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 </title>
+    <title>ADT Admin 2 </title>
 
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -310,10 +286,3 @@ if (isset($_POST['submit'])) {
 
 <?php
 ?>
-<!-- <script type="text/javascript">
-    $(function() {
-        $('#thoiGianPicker').datetimepicker({
-            format: 'YYYY-MM-DD HH:mm:ss',
-        });
-    });
-</script> -->

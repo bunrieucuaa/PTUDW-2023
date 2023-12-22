@@ -1,3 +1,11 @@
+<?php
+session_start();
+if (!isset($_SESSION['user'])) {
+    header('Location: login.php');
+    exit;
+}
+require('../connection.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,9 +19,7 @@
 
     <title>Quản lý nhân viên</title>
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="../css/sb-admin-2.min.css" rel="stylesheet">
     <link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
@@ -37,51 +43,44 @@
                                 <div class="icon">
                                     <i class="fas fa-plus"></i>
                                 </div>
-                                <span class="text">Thêm tài khoản</span>
+                                <span class="text">Thêm nhân viên</span>
                             </a>
                         </div>
                         <div class="card-body">
                             <?php $status = isset($_GET["status"]) ? $_GET["status"] : ""; ?>
-                            <?php if ($status == 'add_success'): ?>
+                            <?php if ($status == 'add_success') : ?>
                                 <div class="alert alert-success" role="alert">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                                            aria-hidden="true">&times;</span></button>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                     <strong>Thêm thành công</strong>
                                 </div>
-                            <?php elseif ($status == 'add_fail'): ?>
+                            <?php elseif ($status == 'add_fail') : ?>
                                 <div class="alert alert-danger" role="alert">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                                            aria-hidden="true">&times;</span></button>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                     <strong>Thêm thất bại</strong>
                                 </div>
-                            <?php elseif ($status == 'del_success'): ?>
+                            <?php elseif ($status == 'del_success') : ?>
                                 <div class="alert alert-success" role="alert">
-                                    <button type="buDtton" class="close" data-dismiss="alert" aria-label="Close"><span
-                                            aria-hidden="true">&times;</span></button>
+                                    <button type="buDtton" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                     <strong>Xóa thành công</strong>
                                 </div>
-                            <?php elseif ($status == 'del_fail'): ?>
+                            <?php elseif ($status == 'del_fail') : ?>
                                 <div class="alert alert-danger" role="alert">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                                            aria-hidden="true">&times;</span></button>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                     <strong>Xóa thất bại</strong>
                                 </div>
-                            <?php elseif ($status == 'update_success'): ?>
+                            <?php elseif ($status == 'update_success') : ?>
                                 <div class="alert alert-success" role="alert">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                                            aria-hidden="true">&times;</span></button>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                     <strong>Sửa thành công</strong>
                                 </div>
-                            <?php elseif ($status == 'update_fail'): ?>
+                            <?php elseif ($status == 'update_fail') : ?>
                                 <div class="alert alert-danger" role="alert">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                                            aria-hidden="true">&times;</span></button>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                     <strong>Sửa thất bại</strong>
                                 </div>
-                            <?php elseif ($status == 'id_not_found'): ?>
+                            <?php elseif ($status == 'id_not_found') : ?>
                                 <div class="alert alert-danger" role="alert">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                                            aria-hidden="true">&times;</span></button>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                     <strong> Không có bản ghi này ! </strong>
                                 </div>
                             <?php endif; ?>
@@ -100,7 +99,7 @@
                                     </thead>
                                     <tbody>
                                         <?php
-                                        require('connection.php');
+                                        require('../connection.php');
                                         $title = "Quản lý nhân viên";
                                         $error = [];
                                         $sql = "SELECT * FROM nhanvien";
@@ -149,7 +148,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
+                        <span>Copyright &copy; ATD Website 2023</span>
                     </div>
                 </div>
             </footer>

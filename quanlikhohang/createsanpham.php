@@ -1,3 +1,11 @@
+<?php
+session_start();
+if (!isset($_SESSION['user'])) {
+    header('Location: login.php');
+    exit;
+}
+require('../connection.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,9 +21,7 @@
 
     <!-- Custom fonts for this template -->
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="../css/sb-admin-2.min.css" rel="stylesheet">
@@ -41,7 +47,7 @@
 
         <!-- Sidebar -->
         <?php
-        include("./sidebar.php");
+        include("../layout/menu.php");
         ?>
         <!-- End of Sidebar -->
 
@@ -53,11 +59,11 @@
 
                 <!-- Topbar -->
                 <?php
-                include("./header.php");
+                include("../layout/header.php");
                 ?>
 
                 <?php
-                require 'connect.php';
+                require '../connection.php';
                 $sqlDonVi = "SELECT * FROM donvi";
                 $sqlDanhMuc = "SELECT * FROM danhmuc";
                 $sqlNhaPhanPhoi = "SELECT * FROM nhaphanphoi";
@@ -105,20 +111,18 @@
                                             <form class="user" action="" method="post" id="form">
                                                 <h1 class="h4 text-gray-900 mb-2">Tên sản phẩm</h1>
                                                 <div class="form-group">
-                                                    <input type="text" name="tenSanPham" class="form-control"
-                                                        id="tenSanPham" placeholder="Tên sản phẩm">
+                                                    <input type="text" name="tenSanPham" class="form-control" id="tenSanPham" placeholder="Tên sản phẩm">
                                                 </div>
                                                 <h1 class="h4 text-gray-900 mb-2">Số lượng</h1>
                                                 <div class="form-group">
-                                                    <input type="number" name="soLuong" class="form-control"
-                                                        id="soLuong" name="soLuong" placeholder="Số lượng">
+                                                    <input type="number" name="soLuong" class="form-control" id="soLuong" name="soLuong" placeholder="Số lượng">
                                                 </div>
 
                                                 <h1 class="h4 text-gray-900 mb-2"> Đợn vị </h1>
                                                 <div class="form-group">
                                                     <select class="form-control" name="donViId">
-                                                        <?php if (mysqli_num_rows($donvi) > 0): ?>
-                                                            <?php foreach ($donvi as $item): ?>
+                                                        <?php if (mysqli_num_rows($donvi) > 0) : ?>
+                                                            <?php foreach ($donvi as $item) : ?>
                                                                 <option value="<?php echo $item['id'] ?>">
                                                                     <?php echo $item['tenDonVi']; ?>
                                                                 </option>
@@ -130,8 +134,8 @@
                                                 <h1 class="h4 text-gray-900 mb-2"> Nhà phân phối </h1>
                                                 <div class="form-group">
                                                     <select class="form-control" name="nhaPhanPhoiId">
-                                                        <?php if (mysqli_num_rows($nhaphanphoi) > 0): ?>
-                                                            <?php foreach ($nhaphanphoi as $item): ?>
+                                                        <?php if (mysqli_num_rows($nhaphanphoi) > 0) : ?>
+                                                            <?php foreach ($nhaphanphoi as $item) : ?>
                                                                 <option value="<?php echo $item['id'] ?>">
                                                                     <?php echo $item['tenNhaPhanPhoi']; ?>
                                                                 </option>
@@ -143,8 +147,8 @@
                                                 <h1 class="h4 text-gray-900 mb-2"> Danh Mục </h1>
                                                 <div class="form-group">
                                                     <select class="form-control" name="danhMucId">
-                                                        <?php if (mysqli_num_rows($danhmuc) > 0): ?>
-                                                            <?php foreach ($danhmuc as $item): ?>
+                                                        <?php if (mysqli_num_rows($danhmuc) > 0) : ?>
+                                                            <?php foreach ($danhmuc as $item) : ?>
                                                                 <option value="<?php echo $item['id'] ?>">
                                                                     <?php echo $item['tenDanhMuc']; ?>
                                                                 </option>
@@ -154,13 +158,10 @@
                                                 </div>
                                                 <div class="form-group row">
                                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                                        <input type="submit" name="submit"
-                                                            class="btn btn-primary btn-user btn-block" id=""
-                                                            placeholder="Tạo sản phẩm">
+                                                        <input type="submit" name="submit" class="btn btn-primary btn-user btn-block" id="" placeholder="Tạo sản phẩm">
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <a href="javascript:history.back()"
-                                                            class="btn btn-danger btn-user btn-block">
+                                                        <a href="javascript:history.back()" class="btn btn-danger btn-user btn-block">
                                                             Hủy bỏ
                                                         </a>
                                                     </div>
@@ -218,8 +219,8 @@
 </html>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        document.querySelector('#form').onsubmit = function () {
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelector('#form').onsubmit = function() {
             let tenSanPham = document.querySelector('#tenSanPham').value;
             let soLuong = document.querySelector('#soLuong').value;
 

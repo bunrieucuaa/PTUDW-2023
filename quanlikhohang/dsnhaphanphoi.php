@@ -1,3 +1,11 @@
+<?php
+session_start();
+if (!isset($_SESSION['user'])) {
+    header('Location: login.php');
+    exit;
+}
+require('../connection.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,13 +19,11 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Tables</title>
+    <title>ADT Admin 2 - Tables</title>
 
     <!-- Custom fonts for this template -->
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="../css/sb-admin-2.min.css" rel="stylesheet">
@@ -35,7 +41,7 @@
 
         <!-- Sidebar -->
         <?php
-        include("sidebar.php");
+        include("../layout/menu.php");
         ?>
         <!-- End of Sidebar -->
 
@@ -47,7 +53,7 @@
 
                 <!-- Topbar -->
                 <?php
-                include("header.php");
+                include("../layout/header.php");
                 ?>
                 <!-- End of Topbar -->
 
@@ -69,40 +75,34 @@
                         </div>
                         <div class="card-body">
                             <?php $status = isset($_GET["status"]) ? $_GET["status"] : ""; ?>
-                            <?php if ($status == 'add_success'): ?>
+                            <?php if ($status == 'add_success') : ?>
                                 <div class="alert alert-success" role="alert">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                                            aria-hidden="true">&times;</span></button>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                     <strong>Thêm thành công</strong>
                                 </div>
-                            <?php elseif ($status == 'add_fail'): ?>
+                            <?php elseif ($status == 'add_fail') : ?>
                                 <div class="alert alert-danger" role="alert">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                                            aria-hidden="true">&times;</span></button>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                     <strong>Thêm thất bại</strong>
                                 </div>
-                            <?php elseif ($status == 'del_success'): ?>
+                            <?php elseif ($status == 'del_success') : ?>
                                 <div class="alert alert-success" role="alert">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                                            aria-hidden="true">&times;</span></button>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                     <strong>Xóa thành công</strong>
                                 </div>
-                            <?php elseif ($status == 'del_fail'): ?>
+                            <?php elseif ($status == 'del_fail') : ?>
                                 <div class="alert alert-danger" role="alert">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                                            aria-hidden="true">&times;</span></button>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                     <strong>Xóa thất bại</strong>
                                 </div>
-                            <?php elseif ($status == 'update_success'): ?>
+                            <?php elseif ($status == 'update_success') : ?>
                                 <div class="alert alert-success" role="alert">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                                            aria-hidden="true">&times;</span></button>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                     <strong>Sửa thành công</strong>
                                 </div>
-                            <?php elseif ($status == 'update_fail'): ?>
+                            <?php elseif ($status == 'update_fail') : ?>
                                 <div class="alert alert-danger" role="alert">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                                            aria-hidden="true">&times;</span></button>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                     <strong>Sửa thất bại</strong>
                                 </div>
                             <?php endif; ?>
@@ -119,7 +119,7 @@
                                     </thead>
                                     <tbody>
                                         <?php
-                                        require "connect.php";
+                                        require "../connection.php";
                                         $sql = "SELECT * FROM  nhaphanphoi";
 
                                         $nhaphanphoi = mysqli_query($conn, $sql);
@@ -141,7 +141,7 @@
                                             $tenNhaPhanPhoi = $row['tenNhaPhanPhoi'];
                                             $diaChi = $row['diaChi'];
                                             $dienThoai = $row['dienThoai'];
-                                            ?>
+                                        ?>
 
                                             <tr>
                                                 <td>
@@ -158,21 +158,17 @@
                                                 </td>
                                                 <?php { ?>
                                                     <td>
-                                                        <a href='dssanphambynhaphanphoi.php?nhaPhanPhoiId=<?php echo $id; ?>'
-                                                            style='color: blue'>
+                                                        <a href='dssanphambynhaphanphoi.php?nhaPhanPhoiId=<?php echo $id; ?>' style='color: blue'>
                                                             <i class="fas fa-exclamation-circle"></i>
                                                         </a>
-                                                        <a href='updatenhaphanphoi.php?updateid=<?php echo $id; ?>'
-                                                            style='color: green'>
+                                                        <a href='updatenhaphanphoi.php?updateid=<?php echo $id; ?>' style='color: green'>
                                                             <i class="fas fa-edit"></i>
                                                         </a>
-                                                        <a href="deletenhaphanphoi.php?deletedid=<?php echo $id; ?>"
-                                                            style='color: red'>
+                                                        <a href="deletenhaphanphoi.php?deletedid=<?php echo $id; ?>" style='color: red'>
                                                             <i class="fas fa-trash"></i>
                                                         </a>
                                                     </td>
-                                                <?php }
-                                                ; ?>
+                                                <?php }; ?>
                                             </tr>
                                         <?php } //Dóng while
                                         ; ?>

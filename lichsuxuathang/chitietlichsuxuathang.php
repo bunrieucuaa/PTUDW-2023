@@ -1,25 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-
 <?php
 session_start();
 if (!isset($_SESSION['user'])) {
     header('Location: login.php');
     exit;
 }
-require('../lichsunhaphang/connection.php');
+require('../connection.php');
 $title = "Chi tiết lịch sử nhập hàng";
 $error = [];
-
-// Check if the 'id' parameter is set in the URL
 if (!isset($_GET['id'])) {
-    header('Location: lichsuxuathang.php'); // Redirect if 'id' is not provided
+    header('Location: lichsuxuathang.php');
     exit;
 }
-
 $id = mysqli_real_escape_string($conn, $_GET['id']);
-
-// Fetch data for the selected record using INNER JOIN
 $queryDetail = "SELECT l.*, nv.tenNhanVien, sp.tenSanPham, np.tenNhaPhanPhoi, dv.tenDonVi, kh.tenKhoHang
                 FROM lichsuxuathang l
                 INNER JOIN nhanvien nv ON l.nhanVienId = nv.id
@@ -28,16 +20,15 @@ $queryDetail = "SELECT l.*, nv.tenNhanVien, sp.tenSanPham, np.tenNhaPhanPhoi, dv
                 INNER JOIN donvi dv ON l.donViId = dv.id
                 INNER JOIN khohang kh ON l.khoHangId = kh.id
                 WHERE l.id = '$id'";
-
 $resultDetail = mysqli_query($conn, $queryDetail);
-
 if (mysqli_num_rows($resultDetail) === 0) {
-    header('Location: lichsuxuathang.php'); // Redirect if record not found
+    header('Location: lichsuxuathang.php');
     exit;
 }
-
 $rowDetail = mysqli_fetch_assoc($resultDetail);
 ?>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
 
@@ -65,8 +56,6 @@ $rowDetail = mysqli_fetch_assoc($resultDetail);
         <div id="content-wrapper" class="d-flex flex-column">
             <div class="content" mx-2>
                 <?php require('../layout/header.php'); ?>
-
-                <!-- Display details of the selected record -->
                 <h1>Chi tiết lịch sử nhập hàng</h1>
                 <table class="table">
                     <tr>

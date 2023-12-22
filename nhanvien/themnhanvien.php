@@ -1,3 +1,11 @@
+<?php
+session_start();
+if (!isset($_SESSION['user'])) {
+    header('Location: login.php');
+    exit;
+}
+require('../connection.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,9 +18,7 @@
     <meta name="author" content="">
     <title>Thêm nhân viên</title>
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="../css/sb-admin-2.min.css" rel="stylesheet">
     <link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
@@ -25,15 +31,14 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">SB Admin <sup>3</sup></div>
+                <div class="sidebar-brand-text mx-3">ADT Admin <sup>3</sup></div>
             </a>
             <hr class="sidebar-divider">
             <div class="sidebar-heading">
                 Addons
             </div>
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
                     <span>Pages</span>
                 </a>
@@ -71,9 +76,9 @@
                     </form>
                 </nav>
                 <?php
-                
-                require('connection.php');
-           
+
+                require('../connection.php');
+
 
                 if (isset($_POST['submit'])) {
 
@@ -82,20 +87,18 @@
                     $email = mysqli_real_escape_string($conn, $_POST['email']);
 
                     $diaChi = mysqli_real_escape_string($conn, $_POST['diaChi']);
-                     $tenChucVu = mysqli_real_escape_string($conn, $_POST['chucVu']);
+                    $tenChucVu = mysqli_real_escape_string($conn, $_POST['chucVu']);
 
                     $sql = "INSERT INTO nhanvien (tenNhanVien, soDienThoai, email, diaChi ,chucVu) VALUES ('$tenNhanVien', '$soDienThoai', '$email', '$diaChi' ,'$tenChucVu')";
 
                     if (mysqli_query($conn, $sql)) {
                         header("Location: nhanvien.php ? status=add_success");
-                        
                     } else {
                         header("Location: nhanvien.php ? status=add_fail");
                     }
 
                     mysqli_close($conn);
                 } else {
-
                 }
                 ?>
                 <div class="container-fluid">
@@ -125,32 +128,31 @@
                                         <label for="email">Email:</label>
                                         <input type="email" class="form-control" id="email" name="email" required>
                                     </div>
-                                   
-                                                <div class="form-group">
-                                                <label for="chucvu">Chức vụ:</label>
-                                                    <select class="form-control" name="chucVu">
-                                                       <option value="Thủ kho">
-                                                           Thủ kho
-                                                       </option>
-                                                       <option value="Nhân viên kho">
-                                                           Nhân viên kho
-                                                       </option>
-                                                       <option value="Kế toán kho">
-                                                           Kế toán kho
-                                                       </option>
-                                                       <option value="Quản lý kho">
-                                                           Quản lý kho
-                                                       </option>
-                                                       <option value="Giám sát kho">
-                                                           Giám sát kho
-                                                       </option>
-                                                    </select>
-                                                    
-                                                </div>
+
+                                    <div class="form-group">
+                                        <label for="chucvu">Chức vụ:</label>
+                                        <select class="form-control" name="chucVu">
+                                            <option value="Thủ kho">
+                                                Thủ kho
+                                            </option>
+                                            <option value="Nhân viên kho">
+                                                Nhân viên kho
+                                            </option>
+                                            <option value="Kế toán kho">
+                                                Kế toán kho
+                                            </option>
+                                            <option value="Quản lý kho">
+                                                Quản lý kho
+                                            </option>
+                                            <option value="Giám sát kho">
+                                                Giám sát kho
+                                            </option>
+                                        </select>
+
+                                    </div>
                                     <div class="form-group">
                                         <label for="diaChi">Địa chỉ:</label>
-                                        <input type="diaChi" class="form-control" id="diaChi" name="diaChi"
-                                            required>
+                                        <input type="diaChi" class="form-control" id="diaChi" name="diaChi" required>
                                     </div>
 
                                     <button name="submit" type="submit" class="btn btn-primary">Thêm nhân viên</button>
@@ -164,7 +166,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
+                        <span>Copyright &copy; ATD Website 2023</span>
                     </div>
                 </div>
             </footer>

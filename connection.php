@@ -1,14 +1,11 @@
 <?php
-$servername = "localhost:8887";
+$server = "localhost";
 $username = "root";
-$password = "root";
-$db = "quanlikhohang";
+$password = "";
+$database = 'quanlikhohang';
+$conn = mysqli_connect($server, $username, $password, $database);
+$conn->set_charset('utf8');
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $db);
-
-// Check connection
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    exit('Lỗi kết nối: ' . $conn->connect_error);
 }
-?>

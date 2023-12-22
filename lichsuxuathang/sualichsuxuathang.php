@@ -1,19 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
 <?php
 session_start();
-if (!isset($_SESSION['user'])) {
-    header('Location: login.php');
-    exit;
-}
-
-require('../lichsunhaphang/connection.php');
+require('../connection.php');
 $title = "Sửa lịch sử xuất hàng";
 $error = [];
 
-if (isset($_GET['id'])) {
+if (isset($_SESSION['user']) && isset($_GET['id'])) {
     $id = mysqli_real_escape_string($conn, $_GET['id']);
-
     $query = "SELECT l.*, n.tenNhanVien, s.tenSanPham, np.tenNhaPhanPhoi, d.tenDonVi, kh.tenKhoHang
               FROM lichsuxuathang l
               INNER JOIN nhanvien n ON l.nhanVienId = n.id
@@ -25,71 +17,61 @@ if (isset($_GET['id'])) {
 
     $result = mysqli_query($conn, $query);
 
-    if ($result && mysqli_num_rows($result) > 0) {
-        $row = mysqli_fetch_assoc($result);
-        $existingNhanVienId = $row['nhanVienId'];
-        $nhanVienName = $row['tenNhanVien'];
-        $existingSanPhamId = $row['sanPhamId'];
-
-        $sanPhamName = $row['tenSanPham'];
-        $existingSoLuong = $row['soLuong'];
-
-        $existingNhaPhanPhoiId = $row['nhaPhanPhoiId'];
-        $nhaPhanPhoiName = $row['tenNhaPhanPhoi'];
-        $existingDonViId = $row['donViId'];
-
-        $donViName = $row['tenDonVi'];
-        $existingKhoHangId = $row['khoHangId'];
-
-        $khoHangName = $row['tenKhoHang'];
-        $existingThoiGian = $row['thoiGian'];
+    if ($result && $row = mysqli_fetch_assoc($result)) {
+        extract($row);
+        $existingNhanVienId = $nhanVienId;
+        $nhanVienName = $tenNhanVien;
+        $existingSanPhamId = $sanPhamId;
+        $sanPhamName = $tenSanPham;
+        $existingSoLuong = $soLuong;
+        $existingNhaPhanPhoiId = $nhaPhanPhoiId;
+        $nhaPhanPhoiName = $tenNhaPhanPhoi;
+        $existingDonViId = $donViId;
+        $donViName = $tenDonVi;
+        $existingKhoHangId = $khoHangId;
+        $khoHangName = $tenKhoHang;
+        $existingThoiGian = $thoiGian;
     } else {
         $error[] = "Không tìm thấy dữ liệu";
     }
-}
 
-$queryNhanVien = "SELECT id, tenNhanVien FROM nhanvien";
-$resultNhanVien = mysqli_query($conn, $queryNhanVien);
+    $queryNhanVien = "SELECT id, tenNhanVien FROM nhanvien";
+    $resultNhanVien = mysqli_query($conn, $queryNhanVien);
 
-$querySanPham = "SELECT id, tenSanPham FROM sanpham";
-$resultSanPham = mysqli_query($conn, $querySanPham);
+    $querySanPham = "SELECT id, tenSanPham FROM sanpham";
+    $resultSanPham = mysqli_query($conn, $querySanPham);
 
-$queryNhaPhanPhoi = "SELECT id, tenNhaPhanPhoi FROM nhaphanphoi";
-$resultNhaPhanPhoi = mysqli_query($conn, $queryNhaPhanPhoi);
+    $queryNhaPhanPhoi = "SELECT id, tenNhaPhanPhoi FROM nhaphanphoi";
+    $resultNhaPhanPhoi = mysqli_query($conn, $queryNhaPhanPhoi);
 
-$queryDonVi = "SELECT id, tenDonVi FROM donvi";
-$resultDonVi = mysqli_query($conn, $queryDonVi);
+    $queryDonVi = "SELECT id, tenDonVi FROM donvi";
+    $resultDonVi = mysqli_query($conn, $queryDonVi);
 
-$queryKhoHang = "SELECT id, tenKhoHang FROM khohang";
-$resultKhoHang = mysqli_query($conn, $queryKhoHang);
+    $queryKhoHang = "SELECT id, tenKhoHang FROM khohang";
+    $resultKhoHang = mysqli_query($conn, $queryKhoHang);
 
-if (isset($_POST['submit'])) {
-    $nhanVienId = mysqli_real_escape_string($conn, $_POST['nhanVienId']);
-    $sanPhamId = mysqli_real_escape_string($conn, $_POST['sanPhamId']);
-    $soLuong = mysqli_real_escape_string($conn, $_POST['soLuong']);
-    $nhaPhanPhoiId = mysqli_real_escape_string($conn, $_POST['nhaPhanPhoiId']);
-    $donViId = mysqli_real_escape_string($conn, $_POST['donViId']);
-    $khoHangId = mysqli_real_escape_string($conn, $_POST['khoHangId']);
-    $thoiGian = mysqli_real_escape_string($conn, $_POST['thoiGian']);
+    if (isset($_POST['submit'])) {
+        $updateQuery = "UPDATE lichsuxuathang
+                        SET nhanVienId = '$_POST[nhanVienId]', sanPhamId = '$_POST[sanPhamId]', soLuong = '$_POST[soLuong]',
+                            nhaPhanPhoiId = '$_POST[nhaPhanPhoiId]', donViId = '$_POST[donViId]', khoHangId = '$_POST[khoHangId]',
+                            thoiGian = '$_POST[thoiGian]'
+                        WHERE id = '$id'";
 
-    $updateQuery = "UPDATE lichsuxuathang
-                    SET nhanVienId = '$nhanVienId', sanPhamId = '$sanPhamId', soLuong = '$soLuong',
-                        nhaPhanPhoiId = '$nhaPhanPhoiId', donViId = '$donViId', khoHangId = '$khoHangId',
-                        thoiGian = '$thoiGian'
-                    WHERE id = '$id'";
-
-    $updateResult = mysqli_query($conn, $updateQuery);
-
-    if ($updateResult) {
-        header("Location: lichsuxuathang.php?status=update_success");
-        exit();
-    } else {
-        $error[] = "Update failed: " . mysqli_error($conn);
-        header("Location: lichsuxuathang.php?status=update_fail");
+        if (mysqli_query($conn, $updateQuery)) {
+            header("Location: lichsuxuathang.php?status=update_success");
+            exit();
+        } else {
+            $error[] = "Update failed: " . mysqli_error($conn);
+            header("Location: lichsuxuathang.php?status=update_fail");
+        }
     }
+} else {
+    header('Location: login.php');
+    exit;
 }
-
 ?>
+<!DOCTYPE html>
+<html lang="en">
 
 </html>
 
@@ -110,7 +92,7 @@ if (isset($_POST['submit'])) {
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 </title>
+    <title>ADT Admin 2 </title>
 
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
