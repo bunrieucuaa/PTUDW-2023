@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Quản lý admin</title>
+    <title>Quản lý nhân viên</title>
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
@@ -30,10 +30,10 @@
                 include("../layout/header.php");
                 ?>
                 <div class="container-fluid">
-                    <h1 class="h3 mb-2 text-gray-800">Quản lý tài khoản</h1>
+                    <h1 class="h3 mb-2 text-gray-800">Quản lý nhân viên</h1>
                     <div class="card shadow mb-4">
                         <div class="card-header py-3 d-flex justify-content-end">
-                            <a href="themtaikhoan.php" class="btn btn-success btn-icon-split">
+                            <a href="themnhanvien.php" class="btn btn-success btn-icon-split">
                                 <div class="icon">
                                     <i class="fas fa-plus"></i>
                                 </div>
@@ -56,7 +56,7 @@
                                 </div>
                             <?php elseif ($status == 'del_success'): ?>
                                 <div class="alert alert-success" role="alert">
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                    <button type="buDtton" class="close" data-dismiss="alert" aria-label="Close"><span
                                             aria-hidden="true">&times;</span></button>
                                     <strong>Xóa thành công</strong>
                                 </div>
@@ -90,54 +90,50 @@
                                     <thead>
                                         <tr>
                                             <th> STT </th>
-                                            <th> Họ tên </th>
-                                            <th> Tài khoản </th>
-                                            <th> Mật khẩu </th>
-                                            <th> Email </th>
-                                            <th> Số điện thoại </th>
-                                            <th> Tác vụ </th>
+                                            <th>Tên nhân viên</th>
+                                            <th>Số điện thoại </th>
+                                            <th>Email</th>
+                                            <th>Chức vụ</th>
+                                            <th>Địa chỉ</th>
+                                            <th>Tác vụ</th>
                                         </tr>
                                     </thead>
-
                                     <tbody>
                                         <?php
                                         require('connection.php');
-                                        $title = "Quản lý Admin";
+                                        $title = "Quản lý nhân viên";
                                         $error = [];
-                                        $sql = "SELECT * FROM admin";
-                                        $admin = mysqli_query($conn, $sql);
-
-
-                                        if (mysqli_num_rows($admin) > 0) {
+                                        $sql = "SELECT * FROM nhanvien";
+                                        $nhanvien = mysqli_query($conn, $sql);
+                                        if (mysqli_num_rows($nhanvien) > 0) {
                                             $counter = 1;
-                                            foreach ($admin as $item) {
+                                            foreach ($nhanvien as $item) {
                                                 $cnt = $counter;
                                                 $counter++;
                                                 $id = $item['id'];
-                                                $hoTen = $item['tenTaiKhoan'];
-                                                $taiKhoan = $item['taiKhoan'];
-                                                $matKhau = $item['matKhau'];
-                                                $email = $item['email'];
+                                                $tenNhanVien = $item['tenNhanVien'];
                                                 $soDienThoai = $item['soDienThoai'];
+                                                $email = $item['email'];
+                                                $chucVu = $item['chucVu'];
+                                                $diaChi = $item['diaChi'];
 
                                                 echo "<tr>
                                                 <th>$cnt</th>
-                                                
-                                                <th>$hoTen</th>
-                                                <th>$taiKhoan</th>
-                                                <th>$matKhau </th>
+                                                <th>$tenNhanVien</th>
+                                                <th>$soDienThoai </th>
                                                 <th>$email</th>
-                                                <th>$soDienThoai</th>
+                                                <th>$chucVu</th>
+                                                <th>$diaChi</th>
                                                 <td style='text-align: center'>
-                                                    <a href='xemtaikhoan.php?id=$id' style='color: blue;'>
-                                                    <i class='fas fa-exclamation-circle'></i>
-                                                    </a>
-                                                    &nbsp;   
-                                                    <a href='suataikhoan.php?id=$id' style='color: green;'><i class='fas fa-edit'></i></a>
-                                                    &nbsp;
-                                                    <a href='xoataikhoan.php?id=$id' style='color: red;'><i class='fas fa-trash'></i></a>
-                                                    &nbsp; 
-                                                </td>
+                                                <a href='xemnhanvien.php?id=$id' style='color: blue;'>
+                                                <i class='fas fa-exclamation-circle'></i>
+                                                </a>
+                                                &nbsp;   
+                                                <a href='suanhanvien.php?id=$id' style='color: green;'><i class='fas fa-edit'></i></a>
+                                                &nbsp;
+                                                <a href='xoanhanvien.php?id=$id' style='color: red;'><i class='fas fa-trash'></i></a>
+                                                &nbsp; 
+                                            </td>
                                             </tr>";
                                             }
                                         }
@@ -148,9 +144,7 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
-
             </div>
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">

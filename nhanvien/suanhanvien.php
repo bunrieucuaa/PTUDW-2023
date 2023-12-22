@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Sửa tài khoản</title>
+    <title>Sửa nhân viên</title>
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
@@ -25,31 +25,13 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+                <div class="sidebar-brand-text mx-3">SB Admin <sup>3</sup></div>
             </a>
             <hr class="sidebar-divider">
             <div class="sidebar-heading">
                 Addons
             </div>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Pages</span>
-                </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Login Screens:</h6>
-                        <a class="collapse-item" href="login.html">Login</a>
-                        <a class="collapse-item" href="register.html">Register</a>
-                        <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
-                        <div class="collapse-divider"></div>
-                        <h6 class="collapse-header">Other Pages:</h6>
-                        <a class="collapse-item" href="404.html">404 Page</a>
-                        <a class="collapse-item" href="blank.html">Blank Page</a>
-                    </div>
-                </div>
-            </li>
+
             <li class="nav-item active">
                 <a class="nav-link" href="tables.html">
                     <i class="fas fa-fw fa-table"></i>
@@ -72,41 +54,42 @@
                 </nav>
                 <?php
 
-
-                require('connection.php');
                 $id = $_GET['id'];
-                $sql = "Select * from admin where id=$id";
+                require('connection.php');
+
+                $sql = "Select * from nhanvien where id=$id";
                 $result = mysqli_query($conn, $sql);
                 $row = mysqli_fetch_assoc($result);
-                $hoTen = $row['tenTaiKhoan'];
-                $taiKhoan = $row['taiKhoan'];
-                $matKhau = $row['matKhau'];
-                $email = $row['email'];
+                $tenNhanVien = $row['tenNhanVien'];
                 $soDienThoai = $row['soDienThoai'];
+                $email = $row['email'];
+                $chucVu = $row['chucVu'];
+                $diaChi = $row['diaChi'];
 
                 if (isset($_POST['submit'])) {
-
                     $id = $_POST['id'];
-                    $hoTen = $_POST['tenTaiKhoan'];
-                    $taiKhoan = $_POST['taiKhoan'];
-                    $matKhau = $_POST['matKhau'];
-                    $email = $_POST['email'];
+                    $tenNhanVien = $_POST['tenNhanVien'];
                     $soDienThoai = $_POST['soDienThoai'];
+                    $email = $_POST['email'];
+                    $chucVu = $_POST['chucVu'];
+                    $diaChi = $_POST['diaChi'];
 
-                    $sql = "UPDATE admin SET tenTaiKhoan='$hoTen' ,taiKhoan = '$taiKhoan', matKhau='$matKhau' , email='$email', soDienThoai='$soDienThoai' WHERE id= $id ";
+                    $sql = "UPDATE nhanvien SET tenNhanVien = '$tenNhanVien', soDienThoai='$soDienThoai', chucVu='$chucVu', email='$email', diaChi='$diaChi' WHERE id= $id ";
 
                     $result = mysqli_query($conn, $sql);
-                    if ($result) {
-                        header("Location: admin.php ? status=update_success");
 
+                    if ($result) {
+                        header("Location: nhanvien.php?status=update_success");
+                        exit();
                     } else {
-                        header("Location: admin.php ? status=update_fail");
+                        header("Location: nhanvien.php?status=update_fail");
+                        exit();
                     }
                 }
                 mysqli_close($conn);
                 ?>
                 <div class="container-fluid">
-                    <h1 class="h3 mb-2 text-gray-800">Sửa tài khoản</h1>
+                    <h1 class="h3 mb-2 text-gray-800">Sửa nhân viên</h1>
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                         </div>
@@ -122,19 +105,15 @@
                                 <form action="" method="POST">
                                     <input type="hidden" name="id" value="<?php echo $id; ?> ">
                                     <div class="form-group">
-                                        <label for="tenTaiKhoan">Họ và tên:</label>
-                                        <input type="text" class="form-control" value="<?php echo $hoTen; ?>"
-                                            id="tenTaiKhoan" name="tenTaiKhoan" required>
+                                        <label for="tenNhanVien">Tên nhân viên:</label>
+                                        <input type="text" class="form-control" value="<?php echo $tenNhanVien; ?>"
+                                            id="tenNhanVien" name="tenNhanVien" required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="taiKhoan">Tài khoản:</label>
-                                        <input type="text" class="form-control" value="<?php echo $taiKhoan; ?>"
-                                            id="taiKhoan" name="taiKhoan" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="matKhau">Mật khẩu:</label>
-                                        <input type="password" class="form-control" value="<?php echo $matKhau; ?>"
-                                            id="matKhau" name="matKhau" required>
+                                        <label for="soDienThoai">Số điện thoại:</label>
+                                        <input type="soDienThoai" class="form-control"
+                                            value="<?php echo $soDienThoai; ?>" id="soDienThoai" name="soDienThoai"
+                                            required>
                                     </div>
                                     <div class="form-group">
                                         <label for="email">Email:</label>
@@ -142,9 +121,22 @@
                                             id="email" name="email" required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="soDienThoai">Số điện thoại:</label>
-                                        <input type="tel" class="form-control" value="<?php echo $soDienThoai; ?>"
-                                            id="soDienThoai" name="soDienThoai" required>
+                                        <label for="chucvu">Chức vụ:</label>
+                                        <select class="form-control" name="chucVu">
+                                            <?php
+                                            $positions = ['Thủ kho', 'Nhân viên kho', 'Kế toán kho', 'Quản lý kho', 'Giám sát kho'];
+
+                                            foreach ($positions as $position) {
+                                                $selected = ($position == $chucVu) ? 'selected' : '';
+                                                echo "<option value='$position' $selected>$position</option>";
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="diaChi">Địa chỉ:</label>
+                                        <input type="diaChi" class="form-control" value="<?php echo $diaChi; ?>"
+                                            id="diaChi" name="diaChi" required>
                                     </div>
 
                                     <button name="submit" type="submit" class="btn btn-primary">Sửa Tài Khoản</button>
