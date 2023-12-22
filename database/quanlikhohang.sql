@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8887
--- Generation Time: Dec 22, 2023 at 10:57 AM
+-- Generation Time: Dec 22, 2023 at 05:15 PM
 -- Server version: 5.7.24
 -- PHP Version: 8.0.1
 
@@ -223,15 +223,13 @@ CREATE TABLE `nhanvien` (
 --
 
 INSERT INTO `nhanvien` (`id`, `tenNhanVien`, `soDienThoai`, `email`, `diaChi`, `chucVu`) VALUES
-(1, 'Nguyễn Quang Thành', '0987678987', 'thanh@gmail.com', 'Liên Mạc, Bắc Từ Liêm, Hà Nội', ''),
-(2, 'Nguyễn Việt An', '0987273748', 'ann@gmail.com', 'Cổ Nhuế, Park Từ Liêm, Hà Nội', ''),
-(3, 'Phạm Tiến Dũng', '0987776676', 'dung@gmail.com', 'Dối diện mỏ địa chất', ''),
-(4, 'Nguyễn Xuân Khánh', '0889876654', 'khanhDen@gmail.com', 'Hòa Lạc, Ba Vì, Hà Nội', ''),
-(5, 'Hoàng Văn Toàn', '0876567876', 'taotentoan@gmail.com', 'Xuân Thủy, Cầu Giấy, Hà Nội', ''),
-(6, 'Nguyễn Việt Dũng', '0545678976', 'dung@gmail.com', 'Cổ Nhuế, Hà Nội', ''),
-(7, 'Bùi Văn Duy', '0944556332', 'duy@gmail.com', 'Từ Sơn, Bắc Ninh', ''),
-(8, 'Nguyễn Việt Hoàng', '0876654456', 'hoang@gmail.com', 'Bắc Sơn, Bắc Giang', ''),
-(9, 'Nguyễn Việt Tiến', '0876654455', 'tien@gmail.com', 'Sapa, Lào Cai', '');
+(1, 'Nguyễn Quang Thành', '0987678987', 'thanh@gmail.com', 'Liên Mạc, Bắc Từ Liêm, Hà Nội', 'Thủ kho'),
+(2, 'Nguyễn Việt An', '0987273748', 'ann@gmail.com', 'Cổ Nhuế, Park Từ Liêm, Hà Nội', 'Nhân viên kho'),
+(3, 'Phạm Tiến Dũng', '0987776676', 'dung@gmail.com', 'Dối diện mỏ địa chất', 'Kế toán kho'),
+(4, 'Nguyễn Xuân Khánh', '0889876654', 'khanhDen@gmail.com', 'Hòa Lạc, Ba Vì, Hà Nội', 'Quản lí kho\r\n'),
+(5, 'Hoàng Văn Toàn', '0876567876', 'taotentoan@gmail.com', 'Xuân Thủy, Cầu Giấy, Hà Nội', 'Giám sát kho\r\n'),
+(6, 'Nguyễn Việt Dũng', '0545678976', 'dung@gmail.com', 'Cổ Nhuế, Hà Nội', 'Nhân viên kho'),
+(8, 'Nguyễn Việt Hoàng', '0876654456', 'hoang@gmail.com', 'Bắc Sơn, Bắc Giang', 'Nhân viên kho');
 
 -- --------------------------------------------------------
 
@@ -254,7 +252,8 @@ INSERT INTO `nhaphanphoi` (`id`, `tenNhaPhanPhoi`, `dienThoai`, `diaChi`) VALUES
 (1, 'Công ty TNHH Hòa An', '0247 774 69 99', 'Km 52+200 Quốc lộ 5, Phường Cẩm Thượng, TP. Hải Dương'),
 (2, 'Công ty TNHH Samsung Electronics Việt Nam Thái Nguyên', '0208-3576666', 'KCN Yên Bình - Phường Đồng Tiến - Thị xã Phổ Yên - Tỉnh Thái Nguyên'),
 (3, 'Công ty TNHH LG Display Việt Nam Hải Phòng', '0225 6266 666', 'Economic Zone, Lot E, Trang Due Industrial Park An Duong District, KCN Đình Vũ, Cát Hải, Hải Phòng'),
-(4, 'Công Ty TNHH Thương Mại Và Đầu Tư Gia Phú', '0903 443 003', 'Số 61, Hẻm 72/73/40, phố Quan Nhân, Phường Nhân Chính, Quận Thanh Xuân, Hà Nội');
+(4, 'Công Ty TNHH Thương Mại Và Đầu Tư Gia Phú', '0903 443 003', 'Số 61, Hẻm 72/73/40, phố Quan Nhân, Phường Nhân Chính, Quận Thanh Xuân, Hà Nội'),
+(7, 'Công Ty TNHH Tobokki', '0987654321', '23 Ha Giang 1');
 
 -- --------------------------------------------------------
 
@@ -403,7 +402,7 @@ ALTER TABLE `donvi`
 -- AUTO_INCREMENT for table `khohang`
 --
 ALTER TABLE `khohang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `lichsunhaphang`
@@ -421,7 +420,7 @@ ALTER TABLE `lichsuxuathang`
 -- AUTO_INCREMENT for table `nhanvien`
 --
 ALTER TABLE `nhanvien`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `nhaphanphoi`
@@ -433,7 +432,7 @@ ALTER TABLE `nhaphanphoi`
 -- AUTO_INCREMENT for table `sanpham`
 --
 ALTER TABLE `sanpham`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- Constraints for dumped tables
