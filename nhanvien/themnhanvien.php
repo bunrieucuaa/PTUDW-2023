@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Sửa tài khoản</title>
+    <title>Thêm nhân viên</title>
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
@@ -25,7 +25,7 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+                <div class="sidebar-brand-text mx-3">SB Admin <sup>3</sup></div>
             </a>
             <hr class="sidebar-divider">
             <div class="sidebar-heading">
@@ -71,42 +71,35 @@
                     </form>
                 </nav>
                 <?php
-
-
+                
                 require('connection.php');
-                $id = $_GET['id'];
-                $sql = "Select * from admin where id=$id";
-                $result = mysqli_query($conn, $sql);
-                $row = mysqli_fetch_assoc($result);
-                $hoTen = $row['tenTaiKhoan'];
-                $taiKhoan = $row['taiKhoan'];
-                $matKhau = $row['matKhau'];
-                $email = $row['email'];
-                $soDienThoai = $row['soDienThoai'];
+           
 
                 if (isset($_POST['submit'])) {
 
-                    $id = $_POST['id'];
-                    $hoTen = $_POST['tenTaiKhoan'];
-                    $taiKhoan = $_POST['taiKhoan'];
-                    $matKhau = $_POST['matKhau'];
-                    $email = $_POST['email'];
-                    $soDienThoai = $_POST['soDienThoai'];
+                    $tenNhanVien = mysqli_real_escape_string($conn, $_POST['tenNhanVien']);
+                    $soDienThoai = mysqli_real_escape_string($conn, $_POST['soDienThoai']);
+                    $email = mysqli_real_escape_string($conn, $_POST['email']);
 
-                    $sql = "UPDATE admin SET tenTaiKhoan='$hoTen' ,taiKhoan = '$taiKhoan', matKhau='$matKhau' , email='$email', soDienThoai='$soDienThoai' WHERE id= $id ";
+                    $diaChi = mysqli_real_escape_string($conn, $_POST['diaChi']);
+                     $tenChucVu = mysqli_real_escape_string($conn, $_POST['chucVu']);
 
-                    $result = mysqli_query($conn, $sql);
-                    if ($result) {
-                        header("Location: admin.php ? status=update_success");
+                    $sql = "INSERT INTO nhanvien (tenNhanVien, soDienThoai, email, diaChi ,chucVu) VALUES ('$tenNhanVien', '$soDienThoai', '$email', '$diaChi' ,'$tenChucVu')";
 
+                    if (mysqli_query($conn, $sql)) {
+                        header("Location: nhanvien.php ? status=add_success");
+                        
                     } else {
-                        header("Location: admin.php ? status=update_fail");
+                        header("Location: nhanvien.php ? status=add_fail");
                     }
+
+                    mysqli_close($conn);
+                } else {
+
                 }
-                mysqli_close($conn);
                 ?>
                 <div class="container-fluid">
-                    <h1 class="h3 mb-2 text-gray-800">Sửa tài khoản</h1>
+                    <h1 class="h3 mb-2 text-gray-800">Thêm nhân viên</h1>
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                         </div>
@@ -120,34 +113,47 @@
                                     </div>
                                 </div>
                                 <form action="" method="POST">
-                                    <input type="hidden" name="id" value="<?php echo $id; ?> ">
                                     <div class="form-group">
-                                        <label for="tenTaiKhoan">Họ và tên:</label>
-                                        <input type="text" class="form-control" value="<?php echo $hoTen; ?>"
-                                            id="tenTaiKhoan" name="tenTaiKhoan" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="taiKhoan">Tài khoản:</label>
-                                        <input type="text" class="form-control" value="<?php echo $taiKhoan; ?>"
-                                            id="taiKhoan" name="taiKhoan" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="matKhau">Mật khẩu:</label>
-                                        <input type="password" class="form-control" value="<?php echo $matKhau; ?>"
-                                            id="matKhau" name="matKhau" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="email">Email:</label>
-                                        <input type="email" class="form-control" value="<?php echo $email; ?>"
-                                            id="email" name="email" required>
+                                        <label for="tenNhanVien">Tên nhân viên:</label>
+                                        <input type="text" class="form-control" id="tenNhanVien" name="tenNhanVien" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="soDienThoai">Số điện thoại:</label>
-                                        <input type="tel" class="form-control" value="<?php echo $soDienThoai; ?>"
-                                            id="soDienThoai" name="soDienThoai" required>
+                                        <input type="text" class="form-control" id="soDienThoai" name="soDienThoai" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">Email:</label>
+                                        <input type="email" class="form-control" id="email" name="email" required>
+                                    </div>
+                                   
+                                                <div class="form-group">
+                                                <label for="chucvu">Chức vụ:</label>
+                                                    <select class="form-control" name="chucVu">
+                                                       <option value="Thủ kho">
+                                                           Thủ kho
+                                                       </option>
+                                                       <option value="Nhân viên kho">
+                                                           Nhân viên kho
+                                                       </option>
+                                                       <option value="Kế toán kho">
+                                                           Kế toán kho
+                                                       </option>
+                                                       <option value="Quản lý kho">
+                                                           Quản lý kho
+                                                       </option>
+                                                       <option value="Giám sát kho">
+                                                           Giám sát kho
+                                                       </option>
+                                                    </select>
+                                                    
+                                                </div>
+                                    <div class="form-group">
+                                        <label for="diaChi">Địa chỉ:</label>
+                                        <input type="diaChi" class="form-control" id="diaChi" name="diaChi"
+                                            required>
                                     </div>
 
-                                    <button name="submit" type="submit" class="btn btn-primary">Sửa Tài Khoản</button>
+                                    <button name="submit" type="submit" class="btn btn-primary">Thêm nhân viên</button>
                                 </form>
                                 </table>
                             </div>

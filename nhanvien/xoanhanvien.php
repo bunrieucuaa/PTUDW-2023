@@ -47,13 +47,13 @@ require('connection.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $id = mysqli_real_escape_string($conn, $_GET['id']);
-    $sql = "DELETE FROM admin WHERE id = '$id'";
+    $sql = "DELETE FROM nhanvien WHERE id = '$id'";
 
     if (mysqli_query($conn, $sql)) {
-        header("Location: admin.php? status=del_success");
+        header("Location: nhanvien.php? status=del_success");
 
     } else {
-        header("Location: admin.php? status=del_fail");
+        header("Location: nhanvien.php? status=del_fail");
     }
     mysqli_close($conn);
 }

@@ -72,20 +72,21 @@
                 </nav>
                 <?php
                 require('connection.php');
-                if (isset($_POST['submit'])) {
 
+                if (isset($_POST['submit'])) {
+                    $tenTaiKhoan = mysqli_real_escape_string($conn, $_POST['tenTaiKhoan']);
                     $taiKhoan = mysqli_real_escape_string($conn, $_POST['taiKhoan']);
                     $matKhau = mysqli_real_escape_string($conn, $_POST['matKhau']);
                     $email = mysqli_real_escape_string($conn, $_POST['email']);
                     $soDienThoai = mysqli_real_escape_string($conn, $_POST['soDienThoai']);
 
-                    $sql = "INSERT INTO admin (taiKhoan, matKhau, email, soDienThoai) VALUES ('$taiKhoan', '$matKhau', '$email', '$soDienThoai')";
+                    $sql = "INSERT INTO admin ( tenTaiKhoan,taiKhoan, matKhau, email, soDienThoai) VALUES ('$tenTaiKhoan','$taiKhoan', '$matKhau', '$email', '$soDienThoai')";
+                    $result = mysqli_query($conn, $sql);
+                    if ($result) {
+                        header("Location: admin.php ? status=add_success");
 
-                    if (mysqli_query($conn, $sql)) {
-                        header("Location: admin.php");
-                        exit();
                     } else {
-
+                        header("Location: admin.php ? status=add_fail");
                     }
 
                     mysqli_close($conn);
@@ -108,6 +109,11 @@
                                     </div>
                                 </div>
                                 <form action="" method="POST">
+                                    <div class="form-group">
+                                        <label for="tenTaiKhoan">Họ và tên:</label>
+                                        <input type="text" class="form-control" id="tenTaiKhoan" name="tenTaiKhoan"
+                                            required>
+                                    </div>
                                     <div class="form-group">
                                         <label for="taiKhoan">Tài khoản:</label>
                                         <input type="text" class="form-control" id="taiKhoan" name="taiKhoan" required>

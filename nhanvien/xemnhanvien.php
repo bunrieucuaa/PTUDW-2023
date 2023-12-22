@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Sửa tài khoản</title>
+    <title>Xem nhân viên</title>
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
@@ -71,42 +71,41 @@
                     </form>
                 </nav>
                 <?php
-
-
-                require('connection.php');
-                $id = $_GET['id'];
-                $sql = "Select * from admin where id=$id";
-                $result = mysqli_query($conn, $sql);
-                $row = mysqli_fetch_assoc($result);
-                $hoTen = $row['tenTaiKhoan'];
-                $taiKhoan = $row['taiKhoan'];
-                $matKhau = $row['matKhau'];
-                $email = $row['email'];
-                $soDienThoai = $row['soDienThoai'];
-
-                if (isset($_POST['submit'])) {
-
-                    $id = $_POST['id'];
-                    $hoTen = $_POST['tenTaiKhoan'];
-                    $taiKhoan = $_POST['taiKhoan'];
-                    $matKhau = $_POST['matKhau'];
-                    $email = $_POST['email'];
-                    $soDienThoai = $_POST['soDienThoai'];
-
-                    $sql = "UPDATE admin SET tenTaiKhoan='$hoTen' ,taiKhoan = '$taiKhoan', matKhau='$matKhau' , email='$email', soDienThoai='$soDienThoai' WHERE id= $id ";
-
-                    $result = mysqli_query($conn, $sql);
-                    if ($result) {
-                        header("Location: admin.php ? status=update_success");
-
-                    } else {
-                        header("Location: admin.php ? status=update_fail");
-                    }
-                }
-                mysqli_close($conn);
+                 $id = $_GET['id'];
+                 require('connection.php');
+                 $sql = "Select * from nhanvien where id=$id";
+                 $result = mysqli_query($conn, $sql);
+                 $row = mysqli_fetch_assoc($result);
+                 $tenNhanVien = $row['tenNhanVien'];
+                 $soDienThoai = $row['soDienThoai'];
+                 $email = $row['email'];
+                 $diaChi = $row['diaChi'];
+                 $chucVu = $row['chucVu'];
+ 
+                 if (isset($_POST['submit'])) {
+ 
+                     $id = $_POST['id'];
+                     $tenNhanVien = $_POST['tenNhanVien'];
+                     $soDienThoai = $_POST['soDienThoai'];
+                     $email = $_POST['email'];
+                     $diaChi = $_POST['diaChi'];
+                     $chucVu = $_POST['chucVu'];
+ 
+                     $sql = "UPDATE nhanvien SET tenNhanVien = '$tenNhanVien', soDienThoai='$soDienThoai' , email='$email', chucVu='$chucVu',diaChi='$diaChi' WHERE id= $id ";
+ 
+                     $result = mysqli_query($conn, $sql);
+                     if ($result) {
+                         header("Location: nhanvien.php");
+                         exit();
+                     } else {
+                         echo "Error updating record: " . mysqli_error($conn);
+                     }
+                 }
+                 mysqli_close($conn);
                 ?>
+
                 <div class="container-fluid">
-                    <h1 class="h3 mb-2 text-gray-800">Sửa tài khoản</h1>
+                    <h1 class="h3 mb-2 text-gray-800">Xem tài khoản</h1>
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                         </div>
@@ -120,34 +119,34 @@
                                     </div>
                                 </div>
                                 <form action="" method="POST">
-                                    <input type="hidden" name="id" value="<?php echo $id; ?> ">
+                                <input type="hidden" name="id" value="<?php echo $id; ?> ">
                                     <div class="form-group">
-                                        <label for="tenTaiKhoan">Họ và tên:</label>
-                                        <input type="text" class="form-control" value="<?php echo $hoTen; ?>"
-                                            id="tenTaiKhoan" name="tenTaiKhoan" required>
+                                        <label for="tenNhanVien">Tên nhân viên:</label>
+                                        <input type="text" class="form-control" value="<?php echo $tenNhanVien; ?>"
+                                            id="tenNhanVien" name="tenNhanVien" required readonly >
                                     </div>
                                     <div class="form-group">
-                                        <label for="taiKhoan">Tài khoản:</label>
-                                        <input type="text" class="form-control" value="<?php echo $taiKhoan; ?>"
-                                            id="taiKhoan" name="taiKhoan" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="matKhau">Mật khẩu:</label>
-                                        <input type="password" class="form-control" value="<?php echo $matKhau; ?>"
-                                            id="matKhau" name="matKhau" required>
+                                        <label for="soDienThoai">Số điện thoại:</label>
+                                        <input type="soDienThoai" class="form-control" value="<?php echo $soDienThoai; ?>"
+                                            id="soDienThoai" name="soDienThoai" required readonly>
                                     </div>
                                     <div class="form-group">
                                         <label for="email">Email:</label>
                                         <input type="email" class="form-control" value="<?php echo $email; ?>"
-                                            id="email" name="email" required>
+                                            id="email" name="email" required readonly>
                                     </div>
                                     <div class="form-group">
-                                        <label for="soDienThoai">Số điện thoại:</label>
-                                        <input type="tel" class="form-control" value="<?php echo $soDienThoai; ?>"
-                                            id="soDienThoai" name="soDienThoai" required>
+                                        <label for="chucVu">Chức vụ:</label>
+                                        <input type="chucVu" class="form-control" value="<?php echo $chucVu; ?>"
+                                            id="chucVu" name="chucVu" required readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="diaChi">Địa chỉ:</label>
+                                        <input type="diaChi" class="form-control" value="<?php echo $diaChi; ?>"
+                                            id="diaChi" name="diaChi" required readonly>
                                     </div>
 
-                                    <button name="submit" type="submit" class="btn btn-primary">Sửa Tài Khoản</button>
+                                    <button name="submit" type="submit" class="btn btn-primary">Xong</button>
                                 </form>
                                 </table>
                             </div>

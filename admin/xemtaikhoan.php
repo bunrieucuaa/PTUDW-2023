@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Thêm tài khoản</title>
+    <title>Xem tài khoản</title>
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
@@ -76,35 +76,30 @@
                 $sql = "Select * from admin where id=$id";
                 $result = mysqli_query($conn, $sql);
                 $row = mysqli_fetch_assoc($result);
+                $hoTen = $row['tenTaiKhoan'];
                 $taiKhoan = $row['taiKhoan'];
                 $matKhau = $row['matKhau'];
                 $email = $row['email'];
                 $soDienThoai = $row['soDienThoai'];
 
                 if (isset($_POST['submit'])) {
-
                     $id = $_POST['id'];
+                    $hoTen = $_POST['tenTaiKhoan'];
                     $taiKhoan = $_POST['taiKhoan'];
                     $matKhau = $_POST['matKhau'];
                     $email = $_POST['email'];
                     $soDienThoai = $_POST['soDienThoai'];
 
-                    $sql = "UPDATE admin SET taiKhoan = '$taiKhoan', matKhau='$matKhau' , email='$email', soDienThoai='$soDienThoai' WHERE id= $id ";
+                    $sql = "UPDATE admin SET tenTaiKhoan='$hoTen', taiKhoan = '$taiKhoan', matKhau='$matKhau' , email='$email', soDienThoai='$soDienThoai' WHERE id= $id ";
 
                     $result = mysqli_query($conn, $sql);
-
-
-
                     if ($result) {
-
                         header("Location: admin.php");
                         exit();
                     } else {
-
                         echo "Error updating record: " . mysqli_error($conn);
                     }
                 }
-
                 mysqli_close($conn);
                 ?>
 
@@ -125,6 +120,11 @@
                                 <form action="" method="POST">
                                     <input type="hidden" name="id" value="<?php echo $id; ?> ">
                                     <div class="form-group">
+                                        <label for="tenTaiKhoan">Họ và tên:</label>
+                                        <input type="text" class="form-control" value="<?php echo $hoTen; ?>"
+                                            id="tenTaiKhoan" name="tenTaiKhoan" required readonly>
+                                    </div>
+                                    <div class="form-group">
                                         <label for="taiKhoan">Tài khoản:</label>
                                         <input type="text" class="form-control" value="<?php echo $taiKhoan; ?>"
                                             id="taiKhoan" name="taiKhoan" required readonly>
@@ -136,8 +136,8 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="email">Email:</label>
-                                        <input type="email" class="form-control" value="<?php echo $email; ?>" id="email"
-                                            name="email" required readonly>
+                                        <input type="email" class="form-control" value="<?php echo $email; ?>"
+                                            id="email" name="email" required readonly>
                                     </div>
                                     <div class="form-group">
                                         <label for="soDienThoai">Số điện thoại:</label>
@@ -146,7 +146,7 @@
                                     </div>
 
                                     <button name="submit" type="submit" class="btn btn-primary">Xong</button>
-                                   <form method="get" action="suataikhoan.php"><button name="submit" type="submit" class="btn btn-primary">Sửa tài khoản</button></form> 
+
                                 </form>
                                 </table>
                             </div>
