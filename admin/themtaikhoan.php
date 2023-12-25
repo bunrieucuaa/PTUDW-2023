@@ -1,5 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php
+session_start();
+if (!isset($_SESSION['user'])) {
+    header('Location: ../login.php');
+    exit;
+}
+require('../connection.php');
+?>
 
 <head>
 
@@ -10,7 +18,9 @@
     <meta name="author" content="">
     <title>Thêm tài khoản</title>
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
     <link href="../css/sb-admin-2.min.css" rel="stylesheet">
     <link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
@@ -30,7 +40,8 @@
                 Addons
             </div>
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
+                    aria-expanded="true" aria-controls="collapsePages">
                     <i class="fas fa-fw fa-folder"></i>
                     <span>Pages</span>
                 </a>
@@ -106,7 +117,8 @@
                                 <form action="" method="POST">
                                     <div class="form-group">
                                         <label for="tenTaiKhoan">Họ và tên:</label>
-                                        <input type="text" class="form-control" id="tenTaiKhoan" name="tenTaiKhoan" required>
+                                        <input type="text" class="form-control" id="tenTaiKhoan" name="tenTaiKhoan"
+                                            required>
                                     </div>
                                     <div class="form-group">
                                         <label for="taiKhoan">Tài khoản:</label>
@@ -122,7 +134,8 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="soDienThoai">Số điện thoại:</label>
-                                        <input type="tel" class="form-control" id="soDienThoai" name="soDienThoai" required>
+                                        <input type="tel" class="form-control" id="soDienThoai" name="soDienThoai"
+                                            required>
                                     </div>
 
                                     <button name="submit" type="submit" class="btn btn-primary">Thêm Tài Khoản</button>
