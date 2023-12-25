@@ -66,7 +66,7 @@ if (isset($_SESSION['user']) && isset($_GET['id'])) {
         }
     }
 } else {
-    header('Location: login.php');
+    header('Location: ../login.php');
     exit;
 }
 ?>
