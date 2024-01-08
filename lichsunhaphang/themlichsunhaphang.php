@@ -32,19 +32,19 @@ if (isset($_POST['submit'])) {
     $khoHangId = mysqli_real_escape_string($conn, $_POST['khoHangId']);
     $thoiGian = mysqli_real_escape_string($conn, $_POST['thoiGian']);
 
-
-    if (empty($nhanVienId)  || empty($sanPhamId) ||  empty($nhaPhanPhoiId)) {
-        $error[] = "Thông tin đang Trở về trống";
-    }
-
-
     if (count($error) == 0) {
-        $sql = "INSERT INTO lichsunhaphang (nhanVienId, sanPhamId, soLuong, nhaPhanPhoiId, donViId, khoHangId,thoiGian) VALUES ('$nhanVienId', '$sanPhamId', '$soLuong', '$nhaPhanPhoiId', '$donViId', '$khoHangId','$thoiGian')";
-
-        if (mysqli_query($conn, $sql)) {
-            header('Location: lichsunhaphang.php?status=add_success');
+        $updateQuery = "UPDATE sanpham SET soLuong = soLuong + '$soLuong' WHERE id = '$sanPhamId'";
+        if (mysqli_query($conn, $updateQuery)) {
+            $sql = "INSERT INTO lichsunhaphang (nhanVienId, sanPhamId, soLuong, nhaPhanPhoiId, donViId, khoHangId, thoiGian) 
+                    VALUES ('$nhanVienId', '$sanPhamId', '$soLuong', '$nhaPhanPhoiId', '$donViId', '$khoHangId', '$thoiGian')";
+            if (mysqli_query($conn, $sql)) {
+                header('Location: lichsunhaphang.php?status=add_success');
+                exit;
+            } else {
+                $error[] = "Error inserting import record: " . mysqli_error($conn);
+            }
         } else {
-            $error[] = "Error: " . mysqli_error($conn);
+            $error[] = "Error updating product quantity: " . mysqli_error($conn);
         }
     }
 }
@@ -71,36 +71,21 @@ if (isset($_POST['submit'])) {
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var form = document.querySelector('form');
-
-            form.addEventListener('submit', function(event) {
-                var nhanVienId = form.querySelector('[name="nhanVienId"]').value;
-                var sanPhamId = form.querySelector('[name="sanPhamId"]').value;
-                var soLuong = form.querySelector('[name="soLuong"]').value;
-                var nhaPhanPhoiId = form.querySelector('[name="nhaPhanPhoiId"]').value;
-                var donViId = form.querySelector('[name="donViId"]').value;
-                var khoHangId = form.querySelector('[name="khoHangId"]').value;
-                var thoiGian = form.querySelector('[name="thoiGian"]').value;
-
-                var errors = [];
-
-                if (nhanVienId === '-1' || sanPhamId === '-1' || nhaPhanPhoiId === '-1') {
-                    errors.push('Vui lòng chọn giá trị cho tất cả các trường bắt buộc.');
-                }
-
-                if (soLuong === '' || soLuong <= 0 || isNaN(soLuong)) {
-                    errors.push('Số lượng phải là một số dương và không được để trống.');
-                }
-
-
-                if (thoiGian === '' || thoiGian === null) {
-                    errors.push('Vui lòng chọn thời gian.');
-                }
-
-                if (errors.length > 0) {
-                    event.preventDefault();
-                    alert('Có lỗi xảy ra:\n' + errors.join('\n'));
-                }
-            });
+            var nhaPhanPhoiSelect = form.querySelector('[name="nhaPhanPhoiId"]');
+            var donViSelect = form.querySelector('[name="donViId"]');
+            var sanPhamSelect = form.querySelector('[name="sanPhamId"]');
+            function updateDistributorAndUnit() {
+                var selectedProductId = sanPhamSelect.value;
+                fetch('get_product_info.php?id=' + selectedProductId)
+                    .then(response => response.json())
+                    .then(data => {
+                        nhaPhanPhoiSelect.value = data.nhaPhanPhoiId;
+                        donViSelect.value = data.donViId;
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+            sanPhamSelect.addEventListener('change', updateDistributorAndUnit);
+            form.addEventListener('submit', function(event) {});
         });
     </script>
 </head>
