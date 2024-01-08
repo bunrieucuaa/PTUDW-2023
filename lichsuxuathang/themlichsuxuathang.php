@@ -34,19 +34,35 @@ if (isset($_POST['submit'])) {
     $khoHangId = mysqli_real_escape_string($conn, $_POST['khoHangId']);
     $thoiGian = mysqli_real_escape_string($conn, $_POST['thoiGian']);
 
-
-    if (empty($nhanVienId)  || empty($sanPhamId) ||  empty($nhaPhanPhoiId)) {
-        $error[] = "Thông tin đang Trở về trống";
+    if (empty($soLuong) || !is_numeric($soLuong) || $soLuong <= 0) {
+        $error[] = "Số lượng xuất không hợp lệ";
     }
 
-
     if (count($error) == 0) {
-        $sql = "INSERT INTO lichsuxuathang (nhanVienId, sanPhamId, soLuong, nhaPhanPhoiId, donViId, khoHangId,thoiGian) VALUES ('$nhanVienId', '$sanPhamId', '$soLuong', '$nhaPhanPhoiId', '$donViId', '$khoHangId','$thoiGian')";
+        $checkQuantityQuery = "SELECT soLuong FROM sanpham WHERE id = '$sanPhamId'";
+        $resultCheckQuantity = mysqli_query($conn, $checkQuantityQuery);
 
-        if (mysqli_query($conn, $sql)) {
-            header('Location: lichsuxuathang.php?status=add_success');
-        } else {
-            $error[] = "Error: " . mysqli_error($conn);
+        if ($rowCheckQuantity = mysqli_fetch_assoc($resultCheckQuantity)) {
+            $currentQuantity = $rowCheckQuantity['soLuong'];
+
+            if ($currentQuantity >= $soLuong) {
+                $updateQuery = "UPDATE sanpham SET soLuong = soLuong - '$soLuong' WHERE id = '$sanPhamId'";
+                if (mysqli_query($conn, $updateQuery)) {
+                    $sql = "INSERT INTO lichsuxuathang (nhanVienId, sanPhamId, soLuong, nhaPhanPhoiId, donViId, khoHangId, thoiGian) 
+                            VALUES ('$nhanVienId', '$sanPhamId', '$soLuong', '$nhaPhanPhoiId', '$donViId', '$khoHangId', '$thoiGian')";
+
+                    if (mysqli_query($conn, $sql)) {
+                        header('Location: lichsuxuathang.php?status=add_success');
+                        exit;
+                    } else {
+                        $error[] = "Error inserting export record: " . mysqli_error($conn);
+                    }
+                } else {
+                    $error[] = "Error updating product quantity: " . mysqli_error($conn);
+                }
+            } else {
+                $error[] = "Không đủ số lượng để xuất";
+            }
         }
     }
 }
@@ -73,35 +89,35 @@ if (isset($_POST['submit'])) {
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var form = document.querySelector('form');
+            var nhaPhanPhoiSelect = form.querySelector('[name="nhaPhanPhoiId"]');
+            var donViSelect = form.querySelector('[name="donViId"]');
+            var sanPhamSelect = form.querySelector('[name="sanPhamId"]');
+            var soLuongInput = form.querySelector('[name="soLuong"]');
+
+            function updateDistributorAndUnit() {
+                var selectedProductId = sanPhamSelect.value;
+
+                fetch('get_product_info.php?id=' + selectedProductId)
+                    .then(response => response.json())
+                    .then(data => {
+                        nhaPhanPhoiSelect.value = data.nhaPhanPhoiId;
+                        donViSelect.value = data.donViId;
+
+                        soLuongInput.setAttribute('data-available-quantity', data.availableQuantity);
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+
+            sanPhamSelect.addEventListener('change', updateDistributorAndUnit);
 
             form.addEventListener('submit', function(event) {
-                var nhanVienId = form.querySelector('[name="nhanVienId"]').value;
-                var sanPhamId = form.querySelector('[name="sanPhamId"]').value;
-                var soLuong = form.querySelector('[name="soLuong"]').value;
-                var nhaPhanPhoiId = form.querySelector('[name="nhaPhanPhoiId"]').value;
-                var donViId = form.querySelector('[name="donViId"]').value;
-                var khoHangId = form.querySelector('[name="khoHangId"]').value;
-                var thoiGian = form.querySelector('[name="thoiGian"]').value;
+                var availableQuantity = parseFloat(soLuongInput.getAttribute('data-available-quantity'));
+                var enteredQuantity = parseFloat(soLuongInput.value);
 
-                var errors = [];
-
-                if (nhanVienId === '-1' || sanPhamId === '-1' || nhaPhanPhoiId === '-1') {
-                    errors.push('Vui lòng chọn giá trị cho tất cả các trường bắt buộc.');
-                }
-
-                if (soLuong === '' || soLuong <= 0 || isNaN(soLuong)) {
-                    errors.push('Số lượng phải là một số dương và không được để trống.');
-                }
-
-
-                if (thoiGian === '' || thoiGian === null) {
-                    errors.push('Vui lòng chọn thời gian.');
-                }
-
-                if (errors.length > 0) {
+                if (isNaN(enteredQuantity) || enteredQuantity <= 0 || enteredQuantity > availableQuantity) {
+                    alert('Số lượng không hợp lệ. Vui lòng kiểm tra lại.');
                     event.preventDefault();
-                    alert('Có lỗi xảy ra:\n' + errors.join('\n'));
-                }
+                } else {}
             });
         });
     </script>

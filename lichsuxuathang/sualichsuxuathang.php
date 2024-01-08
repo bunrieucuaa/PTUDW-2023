@@ -51,18 +51,37 @@ if (isset($_SESSION['user']) && isset($_GET['id'])) {
     $resultKhoHang = mysqli_query($conn, $queryKhoHang);
 
     if (isset($_POST['submit'])) {
-        $updateQuery = "UPDATE lichsuxuathang
-                        SET nhanVienId = '$_POST[nhanVienId]', sanPhamId = '$_POST[sanPhamId]', soLuong = '$_POST[soLuong]',
-                            nhaPhanPhoiId = '$_POST[nhaPhanPhoiId]', donViId = '$_POST[donViId]', khoHangId = '$_POST[khoHangId]',
-                            thoiGian = '$_POST[thoiGian]'
+        $newNhanVienId = mysqli_real_escape_string($conn, $_POST['nhanVienId']);
+        $newSanPhamId = mysqli_real_escape_string($conn, $_POST['sanPhamId']);
+        $newSoLuong = mysqli_real_escape_string($conn, $_POST['soLuong']);
+        $newNhaPhanPhoiId = mysqli_real_escape_string($conn, $_POST['nhaPhanPhoiId']);
+        $newDonViId = mysqli_real_escape_string($conn, $_POST['donViId']);
+        $newKhoHangId = mysqli_real_escape_string($conn, $_POST['khoHangId']);
+        $newThoiGian = mysqli_real_escape_string($conn, $_POST['thoiGian']);
+
+        if (empty($newSoLuong) || !is_numeric($newSoLuong) || $newSoLuong <= 0) {
+            $error[] = "Số lượng nhập không hợp lệ";
+        }
+        if (count($error) == 0) {
+            $quantityDifference = $newSoLuong - $existingSoLuong;
+
+            $updateQuantityQuery = "UPDATE sanpham SET soLuong = soLuong - $quantityDifference WHERE id = '$newSanPhamId'";
+            if (!mysqli_query($conn, $updateQuantityQuery)) {
+                $error[] = "Error updating product quantity: " . mysqli_error($conn);
+            }
+            $updateQuery = "UPDATE lichsuxuathang
+                        SET nhanVienId = '$newNhanVienId', sanPhamId = '$newSanPhamId', soLuong = '$newSoLuong',
+                            nhaPhanPhoiId = '$newNhaPhanPhoiId', donViId = '$newDonViId', khoHangId = '$newKhoHangId',
+                            thoiGian = '$newThoiGian'
                         WHERE id = '$id'";
 
-        if (mysqli_query($conn, $updateQuery)) {
-            header("Location: lichsuxuathang.php?status=update_success");
-            exit();
-        } else {
-            $error[] = "Update failed: " . mysqli_error($conn);
-            header("Location: lichsuxuathang.php?status=update_fail");
+            if (mysqli_query($conn, $updateQuery)) {
+                header("Location: lichsuxuathang.php?status=update_success");
+                exit();
+            } else {
+                $error[] = "Update failed: " . mysqli_error($conn);
+                header("Location: lichsuxuathang.php?status=update_fail");
+            }
         }
     }
 } else {
