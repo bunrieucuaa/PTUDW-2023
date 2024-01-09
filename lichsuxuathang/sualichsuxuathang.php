@@ -174,7 +174,7 @@ if (isset($_SESSION['user']) && isset($_GET['id'])) {
                         </div>
                         <div class="form-group">
                             <label for="nhaPhanPhoiId">Nhà phân phối</label>
-                            <select class="form-control" name="nhaPhanPhoiId" readonly disabled>
+                            <select class="form-control" name="nhaPhanPhoiId">
                                 <?php
                                 echo "<option value=\"$existingNhaPhanPhoiId\" selected>$nhaPhanPhoiName</option>";
                                 while ($row = mysqli_fetch_assoc($resultNhaPhanPhoi)) {
@@ -190,7 +190,7 @@ if (isset($_SESSION['user']) && isset($_GET['id'])) {
                         </div>
                         <div class="form-group">
                             <label for="donViId">Đơn vị</label>
-                            <select class="form-control" name="donViId" readonly disabled>
+                            <select class="form-control" name="donViId">
                                 <?php
                                 echo "<option value=\"$existingDonViId\" selected>$donViName</option>";
                                 while ($row = mysqli_fetch_assoc($resultDonVi)) {

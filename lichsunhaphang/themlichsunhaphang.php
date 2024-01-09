@@ -130,7 +130,7 @@ if (isset($_POST['submit'])) {
                         </div>
                         <div class="form-group">
                             <label for="nhaPhanPhoiId">Nhà phân phối</label>
-                            <select class="form-control" name="nhaPhanPhoiId" readonly disabled>
+                            <select class="form-control" name="nhaPhanPhoiId">
                                 <option value="-1">Chọn nhà phân phối</option>
                                 <?php while ($row = mysqli_fetch_assoc($resultNhaPhanPhoi)): ?>
                                     <option value="<?php echo $row['id']; ?>">
@@ -141,7 +141,7 @@ if (isset($_POST['submit'])) {
                         </div>
                         <div class="form-group">
                             <label for="donViId">Đơn vị</label>
-                            <select class="form-control" name="donViId" readonly disabled>
+                            <select class="form-control" name="donViId">
                                 <option value="-1">Chọn đơn vị</option>
                                 <?php while ($row = mysqli_fetch_assoc($resultDonVi)): ?>
                                     <option value="<?php echo $row['id']; ?>">
