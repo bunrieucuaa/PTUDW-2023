@@ -79,7 +79,9 @@ if (isset($_POST['submit'])) {
     <title>ADT Admin 2 </title>
 
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
 
     <link href="../css/sb-admin-2.min.css" rel="stylesheet">
     <link href="../vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
@@ -87,7 +89,7 @@ if (isset($_POST['submit'])) {
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- Add your custom validation script -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             var form = document.querySelector('form');
             var nhaPhanPhoiSelect = form.querySelector('[name="nhaPhanPhoiId"]');
             var donViSelect = form.querySelector('[name="donViId"]');
@@ -110,14 +112,14 @@ if (isset($_POST['submit'])) {
 
             sanPhamSelect.addEventListener('change', updateDistributorAndUnit);
 
-            form.addEventListener('submit', function(event) {
+            form.addEventListener('submit', function (event) {
                 var availableQuantity = parseFloat(soLuongInput.getAttribute('data-available-quantity'));
                 var enteredQuantity = parseFloat(soLuongInput.value);
 
                 if (isNaN(enteredQuantity) || enteredQuantity <= 0 || enteredQuantity > availableQuantity) {
                     alert('Số lượng không hợp lệ. Vui lòng kiểm tra lại.');
                     event.preventDefault();
-                } else {}
+                } else { }
             });
         });
     </script>
@@ -137,8 +139,10 @@ if (isset($_POST['submit'])) {
                             <label for="nhanVienId">Nhân viên</label>
                             <select class="form-control" name="nhanVienId">
                                 <option value="-1">Chọn nhân viên</option>
-                                <?php while ($row = mysqli_fetch_assoc($resultNhanVien)) : ?>
-                                    <option value="<?php echo $row['id']; ?>"><?php echo $row['tenNhanVien']; ?></option>
+                                <?php while ($row = mysqli_fetch_assoc($resultNhanVien)): ?>
+                                    <option value="<?php echo $row['id']; ?>">
+                                        <?php echo $row['tenNhanVien']; ?>
+                                    </option>
                                 <?php endwhile; ?>
                             </select>
                         </div>
@@ -146,8 +150,10 @@ if (isset($_POST['submit'])) {
                             <label for="sanPhamId">Sản phẩm</label>
                             <select class="form-control" name="sanPhamId">
                                 <option value="-1">Chọn sản phẩm</option>
-                                <?php while ($row = mysqli_fetch_assoc($resultSanPham)) : ?>
-                                    <option value="<?php echo $row['id']; ?>"><?php echo $row['tenSanPham']; ?></option>
+                                <?php while ($row = mysqli_fetch_assoc($resultSanPham)): ?>
+                                    <option value="<?php echo $row['id']; ?>">
+                                        <?php echo $row['tenSanPham']; ?>
+                                    </option>
                                 <?php endwhile; ?>
                             </select>
                         </div>
@@ -157,19 +163,23 @@ if (isset($_POST['submit'])) {
                         </div>
                         <div class="form-group">
                             <label for="nhaPhanPhoiId">Nhà phân phối</label>
-                            <select class="form-control" name="nhaPhanPhoiId">
+                            <select class="form-control" name="nhaPhanPhoiId" readonly disabled>
                                 <option value="-1">Chọn nhà phân phối</option>
-                                <?php while ($row = mysqli_fetch_assoc($resultNhaPhanPhoi)) : ?>
-                                    <option value="<?php echo $row['id']; ?>"><?php echo $row['tenNhaPhanPhoi']; ?></option>
+                                <?php while ($row = mysqli_fetch_assoc($resultNhaPhanPhoi)): ?>
+                                    <option value="<?php echo $row['id']; ?>">
+                                        <?php echo $row['tenNhaPhanPhoi']; ?>
+                                    </option>
                                 <?php endwhile; ?>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="donViId">Đơn vị</label>
-                            <select class="form-control" name="donViId">
+                            <select class="form-control" name="donViId" readonly disabled>
                                 <option value="-1">Chọn đơn vị</option>
-                                <?php while ($row = mysqli_fetch_assoc($resultDonVi)) : ?>
-                                    <option value="<?php echo $row['id']; ?>"><?php echo $row['tenDonVi']; ?></option>
+                                <?php while ($row = mysqli_fetch_assoc($resultDonVi)): ?>
+                                    <option value="<?php echo $row['id']; ?>">
+                                        <?php echo $row['tenDonVi']; ?>
+                                    </option>
                                 <?php endwhile; ?>
                             </select>
                         </div>
@@ -177,8 +187,10 @@ if (isset($_POST['submit'])) {
                             <label for="khoHangId">Kho hàng</label>
                             <select class="form-control" name="khoHangId">
                                 <option value="-1">Chọn kho hàng</option>
-                                <?php while ($row = mysqli_fetch_assoc($resultKhoHang)) : ?>
-                                    <option value="<?php echo $row['id']; ?>"><?php echo $row['tenKhoHang']; ?></option>
+                                <?php while ($row = mysqli_fetch_assoc($resultKhoHang)): ?>
+                                    <option value="<?php echo $row['id']; ?>">
+                                        <?php echo $row['tenKhoHang']; ?>
+                                    </option>
                                 <?php endwhile; ?>
                             </select>
                         </div>
@@ -197,7 +209,8 @@ if (isset($_POST['submit'])) {
             <i class="fas fa-angle-up"></i>
         </a>
 
-        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">

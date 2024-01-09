@@ -92,10 +92,11 @@ if (isset($_POST['submit'])) {
 
 </html>
 
-<?php if (count($error) > 0) : ?>
-    <?php foreach ($error as $errMsg) : ?>
+<?php if (count($error) > 0): ?>
+    <?php foreach ($error as $errMsg): ?>
         <div class="alert alert-danger" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                    aria-hidden="true">&times;</span></button>
             <strong>Error: </strong>
             <?php echo $errMsg; ?>
         </div>
@@ -113,7 +114,9 @@ if (isset($_POST['submit'])) {
     <title>ADT Admin 2 </title>
 
     <link href="../vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
 
     <link href="../css/sb-admin-2.min.css" rel="stylesheet">
 
@@ -164,11 +167,12 @@ if (isset($_POST['submit'])) {
                         </div>
                         <div class="form-group">
                             <label for="soLuong">Số Lượng</label>
-                            <input type="number" class="form-control" name="soLuong" value="<?php echo $existingSoLuong; ?>" required>
+                            <input type="number" class="form-control" name="soLuong"
+                                value="<?php echo $existingSoLuong; ?>" required>
                         </div>
                         <div class="form-group">
                             <label for="nhaPhanPhoiId">Nhà phân phối</label>
-                            <select class="form-control" name="nhaPhanPhoiId">
+                            <select class="form-control" name="nhaPhanPhoiId" readonly disabled>
                                 <?php
                                 echo "<option value=\"$existingNhaPhanPhoiId\" selected>$nhaPhanPhoiName</option>";
                                 while ($row = mysqli_fetch_assoc($resultNhaPhanPhoi)) {
@@ -184,7 +188,7 @@ if (isset($_POST['submit'])) {
                         </div>
                         <div class="form-group">
                             <label for="donViId">Đơn vị</label>
-                            <select class="form-control" name="donViId">
+                            <select class="form-control" name="donViId" readonly disabled>
                                 <?php
                                 echo "<option value=\"$existingDonViId\" selected>$donViName</option>";
                                 while ($row = mysqli_fetch_assoc($resultDonVi)) {
@@ -216,10 +220,12 @@ if (isset($_POST['submit'])) {
                         </div>
                         <div class="form-group">
                             <label for="thoiGian">Thời gian</label>
-                            <input type="datetime-local" class="form-control" name="thoiGian" value="<?php echo date('Y-m-d\TH:i', strtotime($existingThoiGian)); ?>" required>
+                            <input type="datetime-local" class="form-control" name="thoiGian"
+                                value="<?php echo date('Y-m-d\TH:i', strtotime($existingThoiGian)); ?>" required>
                         </div>
                         <input type="submit" class="btn btn-primary" name="submit" value="Cập nhật">&nbsp;
-                        <input type="button" class="btn btn-primary" name="btnCancel" value="Trở về" onclick="history.back(1)">
+                        <input type="button" class="btn btn-primary" name="btnCancel" value="Trở về"
+                            onclick="history.back(1)">
                     </form>
                 </div>
             </div>
@@ -229,7 +235,8 @@ if (isset($_POST['submit'])) {
         <i class="fas fa-angle-up"></i>
     </a>
 
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -263,7 +270,8 @@ if (isset($_POST['submit'])) {
 
     <!-- Page level custom scripts -->
     <script src="../js/demo/datatables-demo.js"></script>
-    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -284,7 +292,8 @@ if (isset($_POST['submit'])) {
         </div>
     </div>
 
-    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
